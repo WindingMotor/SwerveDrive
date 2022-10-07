@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-//import org.ejml.ops.ReadMatrixCsv;
 //import edu.wpi.first.hal.simulation.DIODataJNI;
 import edu.wpi.first.math.controller.PIDController;
 //import edu.wpi.first.math.estimator.AngleStatistics;
@@ -30,6 +29,7 @@ public class SwerveModule extends SubsystemBase {
   private final AnalogInput absoluteEncoder;
   private final boolean absoluteEncoderReversed;
   private final double absoluteEncoderOffsetRad;
+
 
   // Class constructor where we assign default values for variables
    public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed,
@@ -59,7 +59,7 @@ public class SwerveModule extends SubsystemBase {
     // Change drive turning conversion factors
     turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
     turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
-    
+
     // Create PID controller
     turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
 
@@ -68,6 +68,8 @@ public class SwerveModule extends SubsystemBase {
 
     // Call resetEncoders method to set turning encoder to match absolute encoder value
     resetEncoders();
+
+    // Baloney = Maloney
 
   }
 
@@ -115,17 +117,18 @@ public class SwerveModule extends SubsystemBase {
       return;
     }
 
-    // Optimize swerve module state to do fastest roation movement, aka never rotate more than 90*
+    // Optimize swerve module state to do fastest rotation movement, aka never rotate more than 90*
     state = SwerveModuleState.optimize(state, getState().angle);
 
     // Scale velocity down using robot max speed
     driveMotor.set(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
 
-    // Use PID to caculate angle setpoint
+    // Use PID to calculate angle setpoint
     turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
 
-    // Output debugging information to smartdashboard
+    // Output debugging information to smart dashboard
     SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "] state", state.toString());
+    SmartDashboard.putString("Dashboard Test");
 
   }
 

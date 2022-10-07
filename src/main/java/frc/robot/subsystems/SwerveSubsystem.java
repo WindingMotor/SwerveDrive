@@ -1,7 +1,5 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
 
+// File imports
 package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -69,6 +67,8 @@ public class SwerveSubsystem extends SubsystemBase {
     }).start();
   }
 
+
+  // Reset gyro heading 
   public void zeroHeading() {
     gyro.reset();
   }
@@ -78,16 +78,11 @@ public class SwerveSubsystem extends SubsystemBase {
     return Math.IEEEremainder(gyro.getAngle(), 360);
   }
 
-  // Return heading in Roation2D format
+  // Return heading in Rotation2d format
   public Rotation2d getRotation2d(){
     return Rotation2d.fromDegrees(getHeading());
   }
 
-  // Periodic looooooop
-  @Override
-  public void periodic(){
-    SmartDashboard.putNumber("Robot Heading", getHeading());
-  }
 
   // Stop all module movement
   public void stopModules() {
@@ -99,13 +94,20 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
 
-    // Make sure robot rotation is allways possible by changing other module roation speeds
+    // Make sure robot rotation is all ways possible by changing other module roation speeds
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
     frontLeft.setDesiredState(desiredStates[0]);
     frontRight.setDesiredState(desiredStates[1]);
     backLeft.setDesiredState(desiredStates[2]);
     backRight.setDesiredState(desiredStates[3]);
 }
+
+// Periodic looooooop
+@Override
+public void periodic(){
+  SmartDashboard.putNumber("Robot Heading", getHeading());
+}
+
 
 
 
