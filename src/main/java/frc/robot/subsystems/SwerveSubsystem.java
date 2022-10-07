@@ -73,6 +73,7 @@ public class SwerveSubsystem extends SubsystemBase {
     gyro.reset();
   }
 
+  
   // Return heading in -180* to 180* format
   public double getHeading(){
     return Math.IEEEremainder(gyro.getAngle(), 360);
@@ -92,6 +93,7 @@ public class SwerveSubsystem extends SubsystemBase {
     backRight.stop();
   } 
 
+
   public void setModuleStates(SwerveModuleState[] desiredStates) {
 
     // Make sure robot rotation is all ways possible by changing other module roation speeds
@@ -101,6 +103,7 @@ public class SwerveSubsystem extends SubsystemBase {
     backLeft.setDesiredState(desiredStates[2]);
     backRight.setDesiredState(desiredStates[3]);
 }
+
 
 // Periodic looooooop
 @Override

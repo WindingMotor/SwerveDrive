@@ -69,8 +69,6 @@ public class SwerveModule extends SubsystemBase {
     // Call resetEncoders method to set turning encoder to match absolute encoder value
     resetEncoders();
 
-    // Baloney = Maloney
-
   }
 
   // Helpful get methods

@@ -70,17 +70,16 @@ public class SwerveJoystick extends CommandBase {
       chassisSpeeds = new ChassisSpeeds(xSpeed,ySpeed,turningSpeed);
     }
 
-    // Convert chassis speeds to each module state
+    // Set kinematics array for each module state
     SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
-    // Output each module state to motors
+    // Set each module state
     swerveSubsystem.setModuleStates(moduleStates);
 
   }
 
 
-
-  // Stop all modules
+  // Stop all module motor movement
   @Override
   public void end(boolean interrupted){
     swerveSubsystem.stopModules();
