@@ -1,17 +1,12 @@
 
 package frc.robot.subsystems;
-
-
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 //import org.ejml.ops.ReadMatrixCsv;
-
 //import edu.wpi.first.hal.simulation.DIODataJNI;
 import edu.wpi.first.math.controller.PIDController;
 //import edu.wpi.first.math.estimator.AngleStatistics;
@@ -33,7 +28,6 @@ public class SwerveModule extends SubsystemBase {
   private final PIDController turningPidController;
 
   private final AnalogInput absoluteEncoder;
-  double testValue;
   private final boolean absoluteEncoderReversed;
   private final double absoluteEncoderOffsetRad;
 
