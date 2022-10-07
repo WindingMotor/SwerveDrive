@@ -10,6 +10,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+//import org.ejml.ops.ReadMatrixCsv;
+
 //import edu.wpi.first.hal.simulation.DIODataJNI;
 import edu.wpi.first.math.controller.PIDController;
 //import edu.wpi.first.math.estimator.AngleStatistics;
@@ -62,7 +64,7 @@ public class SwerveModule extends SubsystemBase {
     // Change drive turning conversion factors
     turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
     turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
-
+    
     // Create PID controller
     turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
 
@@ -70,7 +72,7 @@ public class SwerveModule extends SubsystemBase {
     turningPidController.enableContinuousInput(-Math.PI, Math.PI);
 
     // Call resetEncoders method to set turning encoder to match absolute encoder value
-    resetEncoders();
+    
 
   }
 
@@ -129,7 +131,6 @@ public class SwerveModule extends SubsystemBase {
 
     // Output debugging information to smartdashboard
     SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "] state", state.toString());
-    SmartDashboard.putString("Dashboard Test");
 
   }
 
