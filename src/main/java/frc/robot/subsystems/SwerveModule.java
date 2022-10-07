@@ -33,6 +33,7 @@ public class SwerveModule extends SubsystemBase {
   private final PIDController turningPidController;
 
   private final AnalogInput absoluteEncoder;
+  double testValue;
   private final boolean absoluteEncoderReversed;
   private final double absoluteEncoderOffsetRad;
 
@@ -72,7 +73,7 @@ public class SwerveModule extends SubsystemBase {
     turningPidController.enableContinuousInput(-Math.PI, Math.PI);
 
     // Call resetEncoders method to set turning encoder to match absolute encoder value
-    
+    resetEncoders();
 
   }
 
