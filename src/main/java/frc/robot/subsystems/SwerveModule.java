@@ -126,7 +126,6 @@ public class SwerveModule extends SubsystemBase {
 
     // Output debugging information to smart dashboard
     SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "] state", state.toString());
-    SmartDashboard.putString("Dashboard Test");
 
   }
 

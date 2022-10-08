@@ -1,10 +1,15 @@
 // File imports
 package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.SwerveJoystick;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 
 public class RobotContainer {
@@ -23,10 +28,10 @@ public class RobotContainer {
 
     // Set swerve subsystem default command to swerve joystick with respective joystick inputs
     swerveSubsystem.setDefaultCommand(new SwerveJoystick(swerveSubsystem,
-    () -> -leftJoystick.getRawAxis(0 /* Place axis value here! X-AXIS */)
-    () -> -leftJoystick.getRawAxis(0 /* Place axis value here! Y-AXIS */)
-    () -> -leftJoystick.getRawAxis(0 /* Place axis value here! R-AXIS */)
-    () -> !leftJoystick.getRawButton(0 /* Place button value here! FIELD ORIENTED? */)))
+    () -> -leftJoystick.getRawAxis(0 /* Place axis value here! X-AXIS */),
+    () -> -leftJoystick.getRawAxis(0 /* Place axis value here! Y-AXIS */),
+    () -> -leftJoystick.getRawAxis(0 /* Place axis value here! R-AXIS */),
+    () -> !leftJoystick.getRawButton(0 /* Place button value here! FIELD ORIENTED? */)));
 
     configureButtonBindings();
     
@@ -36,14 +41,14 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Assign button to manually zero heading
-    new JoystickButton(rightJoystick,0).whenPressed(() -> swerveSubsystem.zeroHeading())
+    new JoystickButton(rightJoystick,0).whenPressed(() -> swerveSubsystem.zeroHeading());
 
   }
 
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 
 
