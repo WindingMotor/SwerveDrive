@@ -12,7 +12,7 @@ import frc.robot.Constants.DriveConstants;
 
 public class SwerveSubsystem extends SubsystemBase {
 
-  // Create 4 swerve modules with atributes from constants
+  // Create 4 swerve modules with attributes from constants
   private final SwerveModule frontLeft = new SwerveModule(
             DriveConstants.kFrontLeftDriveMotorPort,
             DriveConstants.kFrontLeftTurningMotorPort,
@@ -57,7 +57,7 @@ public class SwerveSubsystem extends SubsystemBase {
   // Swerve subsystem constructor
   public SwerveSubsystem() {
 
-    // Reset navX heading on new thread when robot starts but delay it for robot bootup
+    // Reset navX heading on new thread when robot starts but delay it for robot boot up
     new Thread(() -> {
         try {
             Thread.sleep(1000);
@@ -73,7 +73,7 @@ public class SwerveSubsystem extends SubsystemBase {
     gyro.reset();
   }
 
-  
+
   // Return heading in -180* to 180* format
   public double getHeading(){
     return Math.IEEEremainder(gyro.getAngle(), 360);
