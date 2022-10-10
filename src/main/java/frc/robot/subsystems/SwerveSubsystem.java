@@ -2,8 +2,11 @@
 // File imports
 package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -53,6 +56,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // Create the navX using roboRIO expansion port
   private AHRS gyro = new AHRS(SPI.Port.kMXP);
+
+  // Create odometer for error correction
+  private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
 
   // Swerve subsystem constructor
   public SwerveSubsystem() {
@@ -104,11 +110,26 @@ public class SwerveSubsystem extends SubsystemBase {
     backRight.setDesiredState(desiredStates[3]);
 }
 
+  // Return robot position cacilated buy odometer
+  public Pose2d getPose(){
+    return odometer.getPoseMeters();
+  }
+
+  // Reset odometer to new location
+  public void resetOdometry(Pose2d pose){
+    odometer.resetPosition(pose, getRotation2d());
+  }
+
+
+
 
 // Periodic looooooop
 @Override
 public void periodic(){
+  // Periodcily update odometer for it to caculate position
+  odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
   SmartDashboard.putNumber("Robot Heading", getHeading());
+  SmartDashboard.putString("Odometer Robot Location", getPose().getTranslation().toString());
 }
 
 
