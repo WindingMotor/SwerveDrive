@@ -66,7 +66,12 @@ public class RobotContainer {
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared).setKinematics(DriveConstants.kDriveKinematics);
 
     // Generate trajectory
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0,0,new Rotation2d(0)), List.of(new Translation2d(1,0),new Translation2d(1,-1)), new Pose2d(2,-1, Rotation2d.fromDegrees(180)), trajectoryConfig);
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0,0,new Rotation2d(0)), List.of(
+    // Interior points
+    new Translation2d(1,0),
+    new Translation2d(1,-1)), 
+    // Ending point
+    new Pose2d(2,-1, Rotation2d.fromDegrees(180)), trajectoryConfig);
 
     // Create PID controllers for trajectory tracking
     PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
@@ -79,8 +84,8 @@ public class RobotContainer {
     // Create command to follow trajectory
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(trajectory, swerveSubsystem::getPose, DriveConstants.kDriveKinematics, xController, yController, thetaController, swerveSubsystem::setModuleStates, swerveSubsystem);
 
-    return new SequentialCommandGroup(new InstantCommand(() -> swerveSubsystem.resetOdometry(trajectory.getInitialPose())), swerveControllerCommand, new InstantCommand(() -> swerveSubsystem.stopModules()));
-
+    // Set odometer position
+    return new SequentialCommandGroup(new InstantCommand(() -> swerveSubsystem.resetOdometry(trajectory.getInitialPose())), swerveControllerCommand, new InstantCommand(() -> swerveSubsystem.stopModules())); // Turn to point at center 
   }
 
 
