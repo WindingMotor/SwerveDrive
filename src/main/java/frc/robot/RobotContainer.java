@@ -59,6 +59,7 @@ public class RobotContainer {
 
   }
 
+  private Command testAuto;
 
   public Command getAutonomousCommand() {
 
@@ -84,7 +85,7 @@ public class RobotContainer {
     // Create command to follow trajectory
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(trajectory, swerveSubsystem::getPose, DriveConstants.kDriveKinematics, xController, yController, thetaController, swerveSubsystem::setModuleStates, swerveSubsystem);
 
-    // Set odometer position
+    // Return auto command to run
     return new SequentialCommandGroup(new InstantCommand(() -> swerveSubsystem.resetOdometry(trajectory.getInitialPose())), swerveControllerCommand, new InstantCommand(() -> swerveSubsystem.stopModules())); // Turn to point at center 
   }
 
