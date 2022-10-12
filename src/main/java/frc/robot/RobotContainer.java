@@ -43,10 +43,10 @@ public class RobotContainer {
 
     // Set swerve subsystem default command to swerve joystick with respective joystick inputs
     swerveSubsystem.setDefaultCommand(new SwerveJoystick(swerveSubsystem,
-    () -> -leftJoystick.getRawAxis(0 /* Place axis value here! X-AXIS */),
-    () -> -leftJoystick.getRawAxis(0 /* Place axis value here! Y-AXIS */),
-    () -> -leftJoystick.getRawAxis(0 /* Place axis value here! R-AXIS */),
-    () -> !leftJoystick.getRawButton(0 /* Place button value here! FIELD ORIENTED? */)));
+    () -> rightJoystick.getRawAxis(0 /* Place axis value here! X-AXIS */),
+    () -> rightJoystick.getRawAxis(1 /* Place axis value here! Y-AXIS */),
+    () -> leftJoystick.getRawAxis(1 /* Place axis value here! R-AXIS */),
+    () -> !leftJoystick.getRawButton(2 /* Place button value here! FIELD ORIENTED? */)));
 
     configureButtonBindings();
     
@@ -56,7 +56,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Assign button to manually zero heading
-    new JoystickButton(rightJoystick,0).whenPressed(() -> swerveSubsystem.zeroHeading());
+    new JoystickButton(rightJoystick,2).whenPressed(() -> swerveSubsystem.zeroHeading());
 
   }
 

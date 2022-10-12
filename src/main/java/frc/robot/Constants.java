@@ -34,25 +34,29 @@ public final class Constants {
 
     public static final class DriveConstants {
 
-        public static final double kTrackWidth = Units.inchesToMeters(21);
         // Distance between right and left wheels
-        public static final double kWheelBase = Units.inchesToMeters(25.5);
+        public static final double kTrackWidth = Units.inchesToMeters(15.5);
+
         // Distance between front and back wheels
+        public static final double kWheelBase = Units.inchesToMeters(15.5);
+
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
                 new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
                 new Translation2d(kWheelBase / 2, kTrackWidth / 2),
                 new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
                 new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
-        public static final int kFrontLeftDriveMotorPort = 8;
-        public static final int kBackLeftDriveMotorPort = 2;
-        public static final int kFrontRightDriveMotorPort = 6;
-        public static final int kBackRightDriveMotorPort = 4;
+                                                               // Driving Motor Ports
+        public static final int kFrontLeftDriveMotorPort = 1;  // Front Left 
+        public static final int kFrontRightDriveMotorPort = 3; // Front Right
+        public static final int kBackRightDriveMotorPort = 5;  // Back Right
+        public static final int kBackLeftDriveMotorPort = 7;   // Back Left
 
-        public static final int kFrontLeftTurningMotorPort = 7;
-        public static final int kBackLeftTurningMotorPort = 1;
-        public static final int kFrontRightTurningMotorPort = 5;
-        public static final int kBackRightTurningMotorPort = 3;
+                                                                // Turning Motor Ports
+        public static final int kFrontLeftTurningMotorPort = 2; // Front Left
+        public static final int kFrontRightTurningMotorPort = 4;// Front Right
+        public static final int kBackRightTurningMotorPort = 6; // Back Right
+        public static final int kBackLeftTurningMotorPort = 8;  // Back Left
 
         public static final boolean kFrontLeftTurningEncoderReversed = true;
         public static final boolean kBackLeftTurningEncoderReversed = true;
@@ -113,7 +117,7 @@ DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 10;
     public static final class OIConstants {
 
         public static final int kLeftJoystick = 0;
-        public static final int kRightJoystick = 0;
+        public static final int kRightJoystick = 1;
 
         public static final int kDriverFieldOrientedButtonIdx = 1;
 
