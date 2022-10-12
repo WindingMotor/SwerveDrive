@@ -15,9 +15,10 @@ public class TestAuto extends SequentialCommandGroup{
         this.swerveSubsystem = swerveSubsystem;
 
         addCommands(
+            new ResetOdometry(swerveSubsystem, new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(-90.0)))
+
             
-            
-           // new Pose2d(new Translation2d(-0.7, 0), Rotation2d.fromDegrees(-90.0))
+    
             
             
             );
