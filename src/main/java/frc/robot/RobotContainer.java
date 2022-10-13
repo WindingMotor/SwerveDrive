@@ -16,7 +16,9 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.auto.TestAuto;
+import frc.robot.auto.trajectories.Forward2M;
 import frc.robot.commands.SwerveJoystick;
+import frc.robot.commands.TrajectoryRunner;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -51,7 +53,7 @@ public class RobotContainer {
     () -> rightJoystick.getRawAxis(0 /* Place axis value here! X-AXIS */),
     () -> rightJoystick.getRawAxis(1 /* Place axis value here! Y-AXIS */),
     () -> leftJoystick.getRawAxis(1 /* Place axis value here! R-AXIS */),
-    () -> !leftJoystick.getRawButton(2 /* Place button value here! FIELD ORIENTED? */)));
+    () -> !leftJoystick.getRawButton(Constants.OIConstants.kFieldOrientedButton)));
 
     configureButtonBindings();
   }
@@ -60,13 +62,17 @@ public class RobotContainer {
   private void configureButtonBindings(){
 
     // Assign button to manually zero heading
-    new JoystickButton(rightJoystick,2).whenPressed(() -> swerveSubsystem.zeroHeading());
+    new JoystickButton(rightJoystick,Constants.OIConstants.kZeroHeadingButton).whenPressed(() -> swerveSubsystem.zeroHeading());
+    
   }
 
 
-  // Create testAuto command
+  // Create testAuto command without using TrajectoryRunner ;(
   private Command testAuto = new TestAuto(swerveSubsystem, xController, yController, thetaController);
-  
+
+  // Create a command using TrajectoryRunner and passing in trajectory to run
+  private Command forward2M = new TrajectoryRunner(swerveSubsystem, xController, yController, thetaController, Forward2M.getTrajectory(), Forward2M.getTrajectoryConfig());
+
   public Command getAutonomousCommand() {
 
     Command autoCommand = null;

@@ -1,0 +1,38 @@
+
+package frc.robot.auto.trajectories;
+import java.util.List;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DriveConstants;
+
+public class Forward2M {
+
+    // Create trajectory settings
+    private static TrajectoryConfig trajectoryConfig = new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared).setKinematics(DriveConstants.kDriveKinematics);
+
+//--------------------------------T-R-A-J-E-C-T-O-R-Y---------------------------------------//
+
+    private static Trajectory trajectory = TrajectoryGenerator.generateTrajectory( /* Starting point*/ new Pose2d(0,0,new Rotation2d(0)), List.of(
+    // Interior points
+    new Translation2d(1,0),
+    new Translation2d(1,-1)), 
+    // Ending point
+    new Pose2d(2,-1, Rotation2d.fromDegrees(180)), trajectoryConfig);
+
+//--------------------------------T-R-A-J-E-C-T-O-R-Y---------------------------------------//
+
+    public static Trajectory getTrajectory(){
+        return(trajectory);
+    }
+    
+    public static TrajectoryConfig getTrajectoryConfig(){
+        return(trajectoryConfig);
+    }
+
+}

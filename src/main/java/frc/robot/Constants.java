@@ -116,12 +116,13 @@ DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond / 10;
 
     public static final class OIConstants {
 
+        public static final double kDeadband = 0.05;
         public static final int kLeftJoystick = 0;
         public static final int kRightJoystick = 1;
-
-        public static final int kDriverFieldOrientedButtonIdx = 1;
-
-        public static final double kDeadband = 0.05;
+        
+        public static final int kFieldOrientedButton = 3;
+        public static final int kZeroHeadingButton = 2;
+        
     }
 
 
