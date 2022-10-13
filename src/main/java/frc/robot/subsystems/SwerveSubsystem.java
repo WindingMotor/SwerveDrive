@@ -118,24 +118,16 @@ public class SwerveSubsystem extends SubsystemBase {
     odometer.resetPosition(pose, getRotation2d());
   }
 
-// Periodic looooooop
-@Override
-public void periodic(){
-  // Periodcily update odometer for it to caculate position
-  odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
-  SmartDashboard.putNumber("Robot Heading", getHeading());
-  SmartDashboard.putString("Odometer Robot Location", getPose().getTranslation().toString());
-}
-
-
-
-
-
-
-
-
-
+  // Periodic looooooop
+  @Override
+  public void periodic(){
+    // Periodcily update odometer for it to caculate position
+    odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
+    SmartDashboard.putNumber("Robot Heading", getHeading());
+    SmartDashboard.putString("Odometer Robot Location", getPose().getTranslation().toString());
+    
   }
+}
 
 
  
