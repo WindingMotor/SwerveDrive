@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SwerveJoystick extends CommandBase {
@@ -68,11 +69,13 @@ public class SwerveJoystick extends CommandBase {
     else{
       chassisSpeeds = new ChassisSpeeds(xSpeed,ySpeed,turningSpeed);
     }
+    // Put field oriented value on smart dashboard
+    SmartDashboard.putBoolean("Field Oriented?: ", fieldOrientedFunction.get());
 
-    // Set module states using array
+    // Create module states using array
     SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
-    // Actually set each module state
+    // Set each module state
     swerveSubsystem.setModuleStates(moduleStates);
 
   }

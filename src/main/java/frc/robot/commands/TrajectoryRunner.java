@@ -23,30 +23,54 @@ public class TrajectoryRunner extends SequentialCommandGroup{
 
          // Create controller command, this outputs module states for the trajectory given
         SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(trajectory, swerveSubsystem::getPose, DriveConstants.kDriveKinematics, xController, yController, thetaController, swerveSubsystem::setModuleStates, swerveSubsystem);
-        
+
+        // Create report warning command
+        ReportWarning sendData = new ReportWarning("Trajectory runner: " + trajectory.toString());
+
         addCommands(
             // Commands to run sequentially
             new SequentialCommandGroup(
                 new ResetOdometry(swerveSubsystem, trajectory.getInitialPose()),  // Reset robot odometry before movement 
-                swerveControllerCommand, // Command to move robot 
+                swerveControllerCommand, // Move robot
+                sendData, // Tell driver station that command is running and the send trajectory name
                 new InstantCommand(() -> swerveSubsystem.stopModules()) // Stop modules when move command is done
             )
-        );
-            
-            
-            
-            
-            
-            
-            
+        ); 
 
-   
-            
-    
-            
-            
-            
     }
 }
 
-//  return new SequentialCommandGroup(new InstantCommand(() -> swerveSubsystem.resetOdometry(trajectory.getInitialPose())), swerveControllerCommand, new InstantCommand(() -> swerveSubsystem.stopModules())); // Turn to point at center 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* He be runnin
+
+                        ,////,
+                        /// 6|
+                        //  _|
+                       _/_,-'
+                  _.-/'/   \   ,/;,
+               ,-' /'  \_   \ / _/
+               `\ /     _/\  ` /
+                 |     /,  `\_/
+                 |     \'
+     /\_        /`      /\
+   /' /_``--.__/\  `,. /  \
+  |_/`  `-._     `\/  `\   `.
+            `-.__/'     `\   |
+                          `\  \
+                            `\ \
+                              \_\__
+                               \___)
+    
+*/

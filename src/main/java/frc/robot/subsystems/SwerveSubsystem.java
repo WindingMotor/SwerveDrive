@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -50,12 +51,13 @@ public class SwerveSubsystem extends SubsystemBase {
             DriveConstants.kBackRightTurningEncoderReversed,
             DriveConstants.kBackRightDriveAbsoluteEncoderPort,
             DriveConstants.kBackRightDriveAbsoluteEncoderOffsetRad,
-            DriveConstants.kBackRightDriveAbsoluteEncoderReversed);
+            DriveConstants.kBackRightDriveAbsoluteEncoderReversed); 
 
   // The end of this madness ^_^
 
   // Create the navX using roboRIO expansion port
   private AHRS gyro = new AHRS(SPI.Port.kMXP);
+
 
   // Create odometer for error correction
   private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
@@ -63,7 +65,7 @@ public class SwerveSubsystem extends SubsystemBase {
   // Swerve subsystem constructor
   public SwerveSubsystem() {
 
-    // Reset navX heading on new thread when robot starts but delay it for robot boot up
+    // Reset navX heading on new thread when robot starts
     new Thread(() -> {
         try {
             Thread.sleep(1000);
@@ -73,12 +75,10 @@ public class SwerveSubsystem extends SubsystemBase {
     }).start();
   }
 
-
   // Reset gyro heading 
   public void zeroHeading() {
     gyro.reset();
   }
-
 
   // Return heading in -180* to 180* format
   public double getHeading(){
@@ -90,7 +90,6 @@ public class SwerveSubsystem extends SubsystemBase {
     return Rotation2d.fromDegrees(getHeading());
   }
 
-
   // Stop all module movement
   public void stopModules() {
     frontLeft.stop();
@@ -98,7 +97,6 @@ public class SwerveSubsystem extends SubsystemBase {
     backLeft.stop();
     backRight.stop();
   } 
-
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
 
@@ -119,9 +117,6 @@ public class SwerveSubsystem extends SubsystemBase {
   public void resetOdometry(Pose2d pose){
     odometer.resetPosition(pose, getRotation2d());
   }
-
-
-
 
 // Periodic looooooop
 @Override

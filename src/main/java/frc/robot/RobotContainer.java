@@ -26,7 +26,7 @@ public class RobotContainer {
   private final Joystick leftJoystick = new Joystick(IOConstants.kLeftJoystick);
   private final Joystick rightJoystick = new Joystick(IOConstants.kRightJoystick);
 
-  // Xbox controller
+  // Creat Xbox controller
   private final XboxController xboxController = new XboxController(IOConstants.kXboxController);
 
   // Create PID controllers for trajectory tracking
@@ -56,6 +56,7 @@ public class RobotContainer {
     // Assign button to manually zero heading
     new JoystickButton(rightJoystick,Constants.IOConstants.kZeroHeadingButton).whenPressed(() -> swerveSubsystem.zeroHeading());
 
+    
   }
 
   //------------------------------------A-U-T-O-N-O-M-O-U-S------------------------------------//
@@ -81,9 +82,8 @@ public class RobotContainer {
       autoCommand = forward2M;
     }
 
-  //------------------------------------E-N-D------------------------------------//
-
     return autoCommand;
 
   }
 }
+
