@@ -2,7 +2,7 @@
 // File imports
 package frc.robot.commands;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.IOConstants;
 //import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import java.util.function.Supplier;
@@ -50,9 +50,9 @@ public class SwerveJoystick extends CommandBase {
     double turningSpeed = turningSpdFunction.get();
 
     // Apply deadband to protect motors
-    xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;
-    ySpeed = Math.abs(ySpeed) > OIConstants.kDeadband ? ySpeed : 0.0;
-    turningSpeed = Math.abs(turningSpeed) > OIConstants.kDeadband ? turningSpeed : 0.0;
+    xSpeed = Math.abs(xSpeed) > IOConstants.kDeadband ? xSpeed : 0.0;
+    ySpeed = Math.abs(ySpeed) > IOConstants.kDeadband ? ySpeed : 0.0;
+    turningSpeed = Math.abs(turningSpeed) > IOConstants.kDeadband ? turningSpeed : 0.0;
 
     // Apply slew rate to joystick input to make robot input smoother
     xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
@@ -69,21 +69,19 @@ public class SwerveJoystick extends CommandBase {
       chassisSpeeds = new ChassisSpeeds(xSpeed,ySpeed,turningSpeed);
     }
 
-    // Set kinematics array for each module state
+    // Set module states using array
     SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
-    // Set each module state
+    // Actually set each module state
     swerveSubsystem.setModuleStates(moduleStates);
 
   }
-
 
   // Stop all module motor movement
   @Override
   public void end(boolean interrupted){
     swerveSubsystem.stopModules();
   }
-
 
   @Override
   public boolean isFinished() {
