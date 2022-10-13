@@ -18,7 +18,7 @@ import frc.robot.commands.ResetOdometry;
 import frc.robot.subsystems.SwerveSubsystem;
 
 // This is a SequentialCommandGroup class we can use this in auto
-public class containedAuto extends SequentialCommandGroup{
+public class TestAuto extends SequentialCommandGroup{
     
     // Create trajectory settings
     private TrajectoryConfig trajectoryConfig = new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared).setKinematics(DriveConstants.kDriveKinematics);
@@ -35,7 +35,7 @@ public class containedAuto extends SequentialCommandGroup{
 //--------------------------------T-R-A-J-E-C-T-O-R-Y--------------------------------------------------------//
 
     // Constructor that set default values and adds commands to run
-    public containedAuto(SwerveSubsystem swerveSubsystem, PIDController xController,
+    public TestAuto(SwerveSubsystem swerveSubsystem, PIDController xController,
     PIDController yController,  ProfiledPIDController thetaController){
 
         // Tell theta PID controller that its a circle
