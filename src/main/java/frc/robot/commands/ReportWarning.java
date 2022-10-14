@@ -1,7 +1,5 @@
 
 package frc.robot.commands;
-import java.sql.Driver;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 

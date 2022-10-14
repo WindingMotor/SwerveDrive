@@ -1,6 +1,7 @@
 
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.VisionConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -35,12 +36,13 @@ public class VisionSubsystem extends SubsystemBase{
     }
 
     // Update main position variables
-    public void update(){
+    private void update(){
         x = tx.getDouble(0);
         y = ty.getDouble(0);
         a = ta.getDouble(0);
     }
 
+    // Change pipelines of limelight
     public void setView(int v){
         if( v== 0){
             // Set limelight pipeline view to 0
@@ -65,8 +67,15 @@ public class VisionSubsystem extends SubsystemBase{
     }
 
     public double getDistance(){
-        return(distance);
+        return VisionConstants.deltaHeight/(Math.tan(Math.toRadians(VisionConstants.cameraAngle + y)));
     }
+
+
+    @Override
+    public void periodic() {
+    // This method will be called once per scheduler run
+        update();
+  }
 
 
 

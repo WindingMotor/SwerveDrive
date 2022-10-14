@@ -14,7 +14,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SwerveJoystick extends CommandBase {
 
-
+  private double speedModifier;
+  private double turnModifier;
   // Create empty variables for reassignment
   private final SwerveSubsystem swerveSubsystem;
   private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
@@ -25,7 +26,7 @@ public class SwerveJoystick extends CommandBase {
   // Command constructor and requirements 
   public SwerveJoystick(SwerveSubsystem swerveSubsystem,
   Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction,
-  Supplier<Boolean> fieldOrientedFunction) {
+  Supplier<Boolean> fieldOrientedFunction, double speedModifier, double turnModifier) {
 
     // Assign empty variables values passed from constructor and requirements
     this.swerveSubsystem = swerveSubsystem;
@@ -33,6 +34,8 @@ public class SwerveJoystick extends CommandBase {
     this.ySpdFunction = ySpdFunction;
     this.turningSpdFunction = turningSpdFunction;
     this.fieldOrientedFunction = fieldOrientedFunction;
+    this.speedModifier = speedModifier;
+    this.turnModifier = turnModifier;
 
     // Slew rate limiter
     this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
@@ -56,9 +59,9 @@ public class SwerveJoystick extends CommandBase {
     turningSpeed = Math.abs(turningSpeed) > IOConstants.kDeadband ? turningSpeed : 0.0;
 
     // Apply slew rate to joystick input to make robot input smoother
-    xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-    ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-    turningSpeed = turningLimiter.calculate(turningSpeed) * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+    xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond / speedModifier;
+    ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond / speedModifier;
+    turningSpeed = turningLimiter.calculate(turningSpeed) * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond / turnModifier;
 
     // Apply field oriented mode
     ChassisSpeeds chassisSpeeds;

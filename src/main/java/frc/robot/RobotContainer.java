@@ -34,6 +34,10 @@ public class RobotContainer {
   private final PIDController yController = new PIDController(AutoConstants.kPYController, 0, 0);
   private final ProfiledPIDController thetaController = new ProfiledPIDController(AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
 
+  // Modifyers max speed for robot movement
+  private double speedModifier = 2;
+  private double turnModifier = 2;
+
   //------------------------------------C-O-N-T-A-I-N-E-R------------------------------------//
 
   public RobotContainer(){
@@ -43,9 +47,11 @@ public class RobotContainer {
     () -> rightJoystick.getRawAxis(0 /* Place axis value here! X-AXIS */),
     () -> rightJoystick.getRawAxis(1 /* Place axis value here! Y-AXIS */),
     () -> leftJoystick.getRawAxis(1 /* Place axis value here! R-AXIS */),
-    () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton /* Field oriented? */)));
+    () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton /* Field oriented? */),
+    speedModifier,turnModifier));
 
     configureButtonBindings();
+
   }
 
   //------------------------------------B-U-T-T-O-N-S------------------------------------//
