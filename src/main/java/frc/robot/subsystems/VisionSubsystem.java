@@ -66,6 +66,12 @@ public class VisionSubsystem extends SubsystemBase{
         return(a);
     }
 
+    // Return an array of all get method values
+    public double[] getAll(){
+        double[] array = {x,y,a};
+        return(array);
+    }
+
     // Caculate distance from camera to target
     public double getDistance(boolean direct){
         // Get value directly or caculate it

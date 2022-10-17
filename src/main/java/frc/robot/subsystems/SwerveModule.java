@@ -109,7 +109,7 @@ public class SwerveModule extends SubsystemBase {
 
   public void setDesiredState(SwerveModuleState state){
     
-    // Check if new command has high driving velocity 
+    // Check if new command has high driving power 
     if(Math.abs(state.speedMetersPerSecond) < 0.001){
       stop();
       return;
@@ -129,7 +129,7 @@ public class SwerveModule extends SubsystemBase {
 
   }
 
-  // STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP, why is it called STOP thats a weird word.
+  // STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP, this function stops the robot.
   public void stop() {
     driveMotor.set(0);
     turningMotor.set(0);
