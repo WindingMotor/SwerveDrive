@@ -38,7 +38,7 @@ public class RobotContainer {
   private double speedModifier = 2;
   private double turnModifier = 2;
 
-  //------------------------------------C-O-N-T-A-I-N-E-R------------------------------------//
+  //------------------------------------C-O-N-S-T-U-C-T-O-R----------------------------//
 
   public RobotContainer(){
 
@@ -50,6 +50,7 @@ public class RobotContainer {
     () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton /* Field oriented? */),
     speedModifier,turnModifier));
 
+    // Run button binding method
     configureButtonBindings();
 
   }
@@ -73,7 +74,7 @@ public class RobotContainer {
   // Create a command using TrajectoryRunner and passing in trajectory to run
   private Command forward2M = new TrajectoryRunner(swerveSubsystem, xController, yController, thetaController, Forward2M.getTrajectory(), Forward2M.getTrajectoryConfig());
 
-
+  // Returns command to run during auto
   public Command getAutonomousCommand(){
 
     String autoSelector = "testAuto";
@@ -81,6 +82,7 @@ public class RobotContainer {
 
   //------------------------------------S-E-L-E-C-T-O-R------------------------------------//
 
+    // Selector if-statement
     if(autoSelector == "testAuto"){
       autoCommand = testAuto;
     }

@@ -2,14 +2,13 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.VisionConstants;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class VisionSubsystem extends SubsystemBase{
     
-    // Create private instance variables
+    // Create private instance variables 
     NetworkTable table;
     private NetworkTableEntry tx;
     private NetworkTableEntry ty;
@@ -21,7 +20,7 @@ public class VisionSubsystem extends SubsystemBase{
     private double y;
     private double a;
 
-    // Constructor
+    // Subsystem Constructor
     public VisionSubsystem(){
 
     // Get limelight from network tables
@@ -35,14 +34,15 @@ public class VisionSubsystem extends SubsystemBase{
 
     }
 
-    // Update main position variables
+    // Method to update main position variables
     private void update(){
         x = tx.getDouble(0);
         y = ty.getDouble(0);
         a = ta.getDouble(0);
+        distance = getDistance(true);
     }
 
-    // Change pipelines of limelight
+    // Change camera pipelines of limelight
     public void setView(int v){
         if( v== 0){
             // Set limelight pipeline view to 0
@@ -66,16 +66,22 @@ public class VisionSubsystem extends SubsystemBase{
         return(a);
     }
 
-    public double getDistance(){
-        return VisionConstants.deltaHeight/(Math.tan(Math.toRadians(VisionConstants.cameraAngle + y)));
+    // Caculate distance from camera to target
+    public double getDistance(boolean direct){
+        // Get value directly or caculate it
+        if(direct == true){
+            return VisionConstants.deltaHeight/(Math.tan(Math.toRadians(VisionConstants.cameraAngle + y)));
+        }
+        else{ 
+            return distance;
+        }
     }
 
-
+    // Update vision variables once per scheduler run
     @Override
     public void periodic() {
-    // This method will be called once per scheduler run
         update();
-  }
+    }
 
 
 

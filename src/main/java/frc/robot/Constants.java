@@ -7,6 +7,7 @@ import edu.wpi.first.math.util.Units;
 
 public final class Constants {
 
+    // Swerve modules
     public static final class ModuleConstants {
         public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
         public static final double kDriveMotorGearRatio = 1 / 8.14; // old value 1 / 5.8462
@@ -18,8 +19,7 @@ public final class Constants {
         public static final double kPTurning = 0.5;
     }
 
-
-
+    // Swerve drive
     public static final class DriveConstants {
 
         // Distance between right and left wheels
@@ -76,10 +76,11 @@ public final class Constants {
 
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
         public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
+        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 5;
+        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 5;
     }
 
+    // Autonomous
     public static final class AutoConstants {
 
         public static final double kMaxSpeedMetersPerSecond = DriveConstants.kPhysicalMaxSpeedMetersPerSecond / 8;
@@ -96,6 +97,7 @@ public final class Constants {
             kMaxAngularAccelerationRadiansPerSecondSquared);
     }
 
+    // Input and Output 
     public static final class IOConstants {
 
         public static final double kDeadband = 0.05;
@@ -109,15 +111,13 @@ public final class Constants {
            
     }
 
+    // Vision
     public static final class VisionConstants{
 
         // The difference in height between the target's height and the height of the camera.
         public static final int deltaHeight = 0; 
         public static final int cameraAngle = 45;
     }
-
-
-
 
 
 
