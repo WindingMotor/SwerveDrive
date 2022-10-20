@@ -20,11 +20,12 @@ public class RobotContainer {
 
   //------------------------------------V-A-R-I-A-B-L-E-S------------------------------------//
 
-  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-
   // Create joysticks
   private final Joystick leftJoystick = new Joystick(IOConstants.kLeftJoystick);
   private final Joystick rightJoystick = new Joystick(IOConstants.kRightJoystick);
+
+  // Create swerve subsystem
+  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(rightJoystick);
 
   // Create Xbox controller
   private final XboxController xboxController = new XboxController(IOConstants.kXboxController);
@@ -33,8 +34,6 @@ public class RobotContainer {
   private final PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
   private final PIDController yController = new PIDController(AutoConstants.kPYController, 0, 0);
   private final ProfiledPIDController thetaController = new ProfiledPIDController(AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
-
-
 
   //------------------------------------C-O-N-S-T-U-C-T-O-R----------------------------//
 
@@ -62,7 +61,6 @@ public class RobotContainer {
 
   }
 
-
   //------------------------------------A-U-T-O-N-O-M-O-U-S------------------------------------//
   
   // Create testAuto command without using TrajectoryRunner ;(
@@ -88,7 +86,6 @@ public class RobotContainer {
     }
 
     return autoCommand;
-
   }
 }
 

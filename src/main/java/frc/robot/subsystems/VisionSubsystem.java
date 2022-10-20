@@ -44,7 +44,7 @@ public class VisionSubsystem extends SubsystemBase{
 
     // Change camera pipelines of limelight
     public void setView(int v){
-        if( v== 0){
+        if( v == 0){
             // Set limelight pipeline view to 0
             table.getEntry("pipeline").setNumber(0);
         }else if(v == 1){
