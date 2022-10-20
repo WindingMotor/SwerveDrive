@@ -31,7 +31,6 @@ public class VisionSubsystem extends SubsystemBase{
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
-
     }
 
     // Method to update main position variables
