@@ -1,3 +1,4 @@
+// FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
 package frc.robot;
 import edu.wpi.first.math.controller.PIDController;
@@ -5,7 +6,6 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.auto.TestAuto;
 import frc.robot.auto.trajectories.Forward2M;
@@ -26,7 +26,7 @@ public class RobotContainer {
   private final Joystick leftJoystick = new Joystick(IOConstants.kLeftJoystick);
   private final Joystick rightJoystick = new Joystick(IOConstants.kRightJoystick);
 
-  // Creat Xbox controller
+  // Create Xbox controller
   private final XboxController xboxController = new XboxController(IOConstants.kXboxController);
 
   // Create PID controllers for trajectory tracking
@@ -34,9 +34,7 @@ public class RobotContainer {
   private final PIDController yController = new PIDController(AutoConstants.kPYController, 0, 0);
   private final ProfiledPIDController thetaController = new ProfiledPIDController(AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
 
-  // Modifyers max speed for robot movement
-  private double speedModifier = 2;
-  private double turnModifier = 2;
+
 
   //------------------------------------C-O-N-S-T-U-C-T-O-R----------------------------//
 
@@ -47,8 +45,7 @@ public class RobotContainer {
     () -> rightJoystick.getRawAxis(0 /* Place axis value here! X-AXIS */),
     () -> rightJoystick.getRawAxis(1 /* Place axis value here! Y-AXIS */),
     () -> leftJoystick.getRawAxis(1 /* Place axis value here! R-AXIS */),
-    () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton /* Field oriented? */),
-    speedModifier,turnModifier));
+    () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton /* Field oriented? */)));
 
     // Run button binding method
     configureButtonBindings();
@@ -63,8 +60,8 @@ public class RobotContainer {
     // Assign button to manually zero heading
     new JoystickButton(rightJoystick,Constants.IOConstants.kZeroHeadingButton).whenPressed(() -> swerveSubsystem.zeroHeading());
 
-    
   }
+
 
   //------------------------------------A-U-T-O-N-O-M-O-U-S------------------------------------//
   

@@ -1,6 +1,7 @@
+// FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
-// File imports
 package frc.robot.commands;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IOConstants;
 //import frc.robot.subsystems.ExampleSubsystem;
@@ -9,6 +10,7 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -26,7 +28,7 @@ public class SwerveJoystick extends CommandBase {
   // Command constructor and requirements 
   public SwerveJoystick(SwerveSubsystem swerveSubsystem,
   Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction,
-  Supplier<Boolean> fieldOrientedFunction, double speedModifier, double turnModifier) {
+  Supplier<Boolean> fieldOrientedFunction) {
 
     // Assign empty variables values passed from constructor and requirements
     this.swerveSubsystem = swerveSubsystem;
@@ -34,8 +36,6 @@ public class SwerveJoystick extends CommandBase {
     this.ySpdFunction = ySpdFunction;
     this.turningSpdFunction = turningSpdFunction;
     this.fieldOrientedFunction = fieldOrientedFunction;
-    this.speedModifier = speedModifier;
-    this.turnModifier = turnModifier;
 
     // Slew rate limiter
     this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
@@ -60,6 +60,10 @@ public class SwerveJoystick extends CommandBase {
     ySpeed = Math.abs(ySpeed) > IOConstants.kDeadband ? ySpeed : 0.0;
     turningSpeed = Math.abs(turningSpeed) > IOConstants.kDeadband ? turningSpeed : 0.0;
 
+    // Set updated values of the speed modifyers
+    this.speedModifier = swerveSubsystem.getSpeedModifier(false);
+    this.turnModifier = swerveSubsystem.getTurnModifier();
+
     // Apply slew rate to joystick input to make robot input smoother
     xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond / speedModifier;
     ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond / speedModifier;
@@ -68,32 +72,30 @@ public class SwerveJoystick extends CommandBase {
     // Apply field oriented mode
     ChassisSpeeds chassisSpeeds;
     if(fieldOrientedFunction.get()){
+      DriverStation.reportWarning("Applying field oriented mode!", true);
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
     }
     // Apply non-field oriented mode
     else{
       chassisSpeeds = new ChassisSpeeds(xSpeed,ySpeed,turningSpeed);
     }
+
     // Put field oriented value on smart dashboard
-    SmartDashboard.putBoolean("Field Oriented?: ", fieldOrientedFunction.get());
+    SmartDashboard.putBoolean("Field Oriented: ", fieldOrientedFunction.get());
 
     // Create module states using array
     SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
     // Set each module state
     swerveSubsystem.setModuleStates(moduleStates);
-
   }
 
-  // Stop all module motor movement
+  // Stop all module motor movement when command ends
   @Override
-  public void end(boolean interrupted){
-    swerveSubsystem.stopModules();
-  }
+  public void end(boolean interrupted){swerveSubsystem.stopModules();}
+
 
   @Override
-  public boolean isFinished() {
-    return false;
-  }
+  public boolean isFinished(){return false;}
 
 }

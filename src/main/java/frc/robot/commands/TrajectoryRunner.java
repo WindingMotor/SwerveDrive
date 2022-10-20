@@ -1,3 +1,4 @@
+// FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
 package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
@@ -24,16 +25,16 @@ public class TrajectoryRunner extends SequentialCommandGroup{
          // Create controller command, this outputs module states for the trajectory given
         SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(trajectory, swerveSubsystem::getPose, DriveConstants.kDriveKinematics, xController, yController, thetaController, swerveSubsystem::setModuleStates, swerveSubsystem);
 
-        // Create report warning command
+        // Create report warning command, prints running trajectory to driver station
         ReportWarning sendData = new ReportWarning("Trajectory runner: " + trajectory.toString());
 
         addCommands(
             // Commands to run sequentially
             new SequentialCommandGroup(
                 new ResetOdometry(swerveSubsystem, trajectory.getInitialPose()),  // Reset robot odometry before movement 
-                swerveControllerCommand, // Move robot
-                sendData, // Tell driver station that command is running and the send trajectory name
-                new InstantCommand(() -> swerveSubsystem.stopModules()) // Stop modules when move command is done
+                swerveControllerCommand, // Move robot with trajectory and module states
+                sendData, // Tell driver station that command is running
+                new InstantCommand(() -> swerveSubsystem.stopModules()) // Stop all modules
             )
         ); 
 

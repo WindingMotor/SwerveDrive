@@ -1,17 +1,18 @@
+// FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
-// File imports
 package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+
 
 public class SwerveSubsystem extends SubsystemBase {
 
@@ -54,6 +55,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // The end of this madness ^_^
 
+  // Modifyers for max speed of robot 
+  private double speedModifier = 2;
+  private double turnModifier = 2;
+
   // Create the navX using roboRIO expansion port
   private AHRS gyro = new AHRS(SPI.Port.kMXP);
 
@@ -61,8 +66,14 @@ public class SwerveSubsystem extends SubsystemBase {
   // Create odometer for error correction
   private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
 
+  // Create empty right joystick for live speed control
+  Joystick rightJoystick;
+
   // Swerve subsystem constructor
-  public SwerveSubsystem() {
+  public SwerveSubsystem(Joystick rightJoystick) {
+
+    // Assign right joystick
+    this.rightJoystick = rightJoystick;
 
     // Reset navX heading on new thread when robot starts
     new Thread(() -> {
@@ -126,6 +137,22 @@ public class SwerveSubsystem extends SubsystemBase {
     SmartDashboard.putString("Odometer Robot Location", getPose().getTranslation().toString());
 
   }
+
+  public double getSpeedModifier(boolean live){
+    // Check if live input if on
+    if(live){
+      // Return value of knob on right joystick
+      return(rightJoystick.getRawAxis(3));
+    }
+    else{return speedModifier;}
+  }
+
+  public void setSpeedModifier(double s){speedModifier = s;}
+
+  public double getTurnModifier(){return turnModifier;}
+
+  public void setTurnModifier(double t){turnModifier = t;}
+  
 }
 
 
