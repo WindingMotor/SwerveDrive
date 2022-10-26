@@ -32,7 +32,7 @@ public class VisionSubsystem extends SubsystemBase{
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
-    }
+}
 
     // Method to update main position variables
     private void update(){
@@ -85,14 +85,5 @@ public class VisionSubsystem extends SubsystemBase{
 
     // Update vision variables once per scheduler run
     @Override
-    public void periodic() {
-        update();
-    }
-
-
-
-
-
-
-
+    public void periodic(){update();}
 }

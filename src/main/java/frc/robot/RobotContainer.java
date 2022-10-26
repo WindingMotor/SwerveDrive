@@ -48,7 +48,6 @@ public class RobotContainer {
 
     // Run button binding method
     configureButtonBindings();
-
   }
 
   //------------------------------------B-U-T-T-O-N-S------------------------------------//
