@@ -1,3 +1,7 @@
-# SwerveDrive
+# SwerveDrive:
+  -A basic swerve drive code base using neo motors
 
-Swerve drive code for an offseason robot can also be used as base code for future robots.
+# Features:
+  -Easy to understand swerve code
+  -Command based trajectory following
+  -Basic Limelight system 
