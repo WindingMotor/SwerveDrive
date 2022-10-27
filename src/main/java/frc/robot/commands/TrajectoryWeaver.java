@@ -11,6 +11,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -33,14 +34,12 @@ public class TrajectoryWeaver extends SequentialCommandGroup{
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         // Create path planner controller command, this outputs module states for the path planner trajectory given
-        //PPSwerveControllerCommand swerveControllerCommand new PPSwerveControllerCommand(pptrajectory, swerveSubsystem::getPose, DriveConstants.kDriveKinematics, xController, yController, thetaController, swerveSubsystem::setModuleStates, eventMap, swerveSubsystem);
-
-        PPSwerveControllerCommand ppswerveControllerCommand = new PPSwerveControllerCommand(pptrajectory, swerveSubsystem::getPose, DriveConstants.kDriveKinematics, xController, yController, thetaController, swerveSubsystem::setModuleStates, swerveSubsystem);
+        // PPSwerveControllerCommand ppswerveControllerCommand new PPSwerveControllerCommand(pptrajectory, swerveSubsystem::getPose, DriveConstants.kDriveKinematics, xController, yController, thetaController, swerveSubsystem::setModuleStates, eventMap, swerveSubsystem);
 
         // Create report warning command, prints running trajectory to driver station
         ReportWarning sendData = new ReportWarning("Trajectory runner: " + pptrajectory.toString());
 
-        
+        /*
         addCommands(
             // Commands to run sequentially
             new SequentialCommandGroup(
@@ -50,6 +49,7 @@ public class TrajectoryWeaver extends SequentialCommandGroup{
                 new InstantCommand(() -> swerveSubsystem.stopModules()) // Stop all modules
             )
         ); 
+        */
         
 
     }
