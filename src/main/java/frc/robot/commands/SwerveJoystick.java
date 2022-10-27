@@ -24,7 +24,6 @@ public class SwerveJoystick extends CommandBase {
   private final Supplier<Boolean> fieldOrientedFunction;
   private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
 
-
   // Command constructor and requirements 
   public SwerveJoystick(SwerveSubsystem swerveSubsystem,
   Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction,
@@ -94,7 +93,6 @@ public class SwerveJoystick extends CommandBase {
   // Stop all module motor movement when command ends
   @Override
   public void end(boolean interrupted){swerveSubsystem.stopModules();}
-
 
   @Override
   public boolean isFinished(){return false;}

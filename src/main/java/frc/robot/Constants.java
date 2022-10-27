@@ -119,12 +119,4 @@ public final class Constants {
         public static final int deltaHeight = 0; 
         public static final int cameraAngle = 45;
     }
-
-
-
-
-
-
-
-
 }

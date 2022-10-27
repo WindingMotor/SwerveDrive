@@ -34,7 +34,7 @@ public class TrajectoryWeaver extends SequentialCommandGroup{
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         // Create path planner controller command, this outputs module states for the path planner trajectory given
-        // PPSwerveControllerCommand ppswerveControllerCommand new PPSwerveControllerCommand(pptrajectory, swerveSubsystem::getPose, DriveConstants.kDriveKinematics, xController, yController, thetaController, swerveSubsystem::setModuleStates, eventMap, swerveSubsystem);
+        // PPSwerveControllerCommand ppswerveControllerCommand =  new PPSwerveControllerCommand(pptrajectory, swerveSubsystem:getPose, DriveConstants.kDriveKinematics, xController, yController, thetaController, swerveSubsystem::setModuleStates, swerveSubsystem);
 
         // Create report warning command, prints running trajectory to driver station
         ReportWarning sendData = new ReportWarning("Trajectory runner: " + pptrajectory.toString());
@@ -51,41 +51,7 @@ public class TrajectoryWeaver extends SequentialCommandGroup{
         ); 
         */
         
+        
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* He be runnin
-
-                        ,////,
-                        /// 6|
-                        //  _|
-                       _/_,-'
-                  _.-/'/   \   ,/;,
-               ,-' /'  \_   \ / _/
-               `\ /     _/\  ` /
-                 |     /,  `\_/
-                 |     \'
-     /\_        /`      /\
-   /' /_``--.__/\  `,. /  \
-  |_/`  `-._     `\/  `\   `.
-            `-.__/'     `\   |
-                          `\  \
-                            `\ \
-                              \_\__
-                               \___)
-    
-*/

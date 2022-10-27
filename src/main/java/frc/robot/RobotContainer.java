@@ -42,7 +42,7 @@ public class RobotContainer {
   private final PIDController yController = new PIDController(AutoConstants.kPYController, 0, 0);
   private final ProfiledPIDController thetaController = new ProfiledPIDController(AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
 
-  //------------------------------------C-O-N-S-T-U-C-T-O-R----------------------------//
+  //------------------------------------C-O-N-S-T-R-U-C-T-O-R----------------------------//
 
   public RobotContainer(){
 

@@ -142,12 +142,14 @@ public class SwerveSubsystem extends SubsystemBase {
   public void periodic(){
     // Periodicly update odometer for it to caculate position
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
-    SmartDashboard.putNumber("Robot Heading", getHeading());
-    SmartDashboard.putString("Odometer Robot Location", getPose().getTranslation().toString());
+    SmartDashboard.putNumber("Heading", getHeading());
+    SmartDashboard.putString("Field Location", getPose().getTranslation().toString());
+    SmartDashboard.putNumber("Speed Modifier: ", getSpeedModifier(false));
   }
 
+  // Speed modifier methods
   public double getSpeedModifier(boolean live){
-    // Check if live input if on
+    // Check if live input if on23
     if(live){
       // Return value of knob on right joystick
       return(rightJoystick.getRawAxis(3));
