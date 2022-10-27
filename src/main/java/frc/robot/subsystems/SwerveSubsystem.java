@@ -2,6 +2,13 @@
 
 package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -11,7 +18,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.TrajectoryWeaver;
 
 
 public class SwerveSubsystem extends SubsystemBase {
@@ -118,7 +127,7 @@ public class SwerveSubsystem extends SubsystemBase {
     backRight.setDesiredState(desiredStates[3]);
 }
 
-  // Return robot position cacilated buy odometer
+  // Return robot position caculated buy odometer
   public Pose2d getPose(){
     return odometer.getPoseMeters();
   }
@@ -131,11 +140,10 @@ public class SwerveSubsystem extends SubsystemBase {
   // Periodic looooooop
   @Override
   public void periodic(){
-    // Periodcily update odometer for it to caculate position
+    // Periodicly update odometer for it to caculate position
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
     SmartDashboard.putNumber("Robot Heading", getHeading());
     SmartDashboard.putString("Odometer Robot Location", getPose().getTranslation().toString());
-
   }
 
   public double getSpeedModifier(boolean live){

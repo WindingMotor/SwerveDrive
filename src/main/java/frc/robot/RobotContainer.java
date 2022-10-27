@@ -1,16 +1,23 @@
 // FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
 package frc.robot;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.auto.TestAuto;
 import frc.robot.auto.trajectories.Forward2M;
 import frc.robot.commands.SwerveJoystick;
 import frc.robot.commands.TrajectoryRunner;
+import frc.robot.commands.TrajectoryWeaver;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -67,6 +74,12 @@ public class RobotContainer {
 
   // Create a command using TrajectoryRunner and passing in trajectory to run
   private Command forward2M = new TrajectoryRunner(swerveSubsystem, xController, yController, thetaController, Forward2M.getTrajectory(), Forward2M.getTrajectoryConfig());
+
+
+  // Load in trajectory and create command for it
+  PathPlannerTrajectory testPath = PathPlanner.loadPath("testPath", new PathConstraints(4, 3) /* velocity and acceleration */ ); 
+  private Command PPtest = new TrajectoryWeaver(swerveSubsystem, xController, yController, thetaController, testPath);
+
 
   // Returns command to run during auto
   public Command getAutonomousCommand(){
