@@ -3,11 +3,12 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.VisionConstants;
+import javax.xml.crypto.dsig.keyinfo.X509Data;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-public class VisionSubsystem extends SubsystemBase{
+public class LimelightSubsystem extends SubsystemBase{
     
     // Create private instance variables 
     NetworkTable table;
@@ -17,12 +18,13 @@ public class VisionSubsystem extends SubsystemBase{
 
     // Caculation variables
     private double distance;
+    private double[] all = new double[2];
     private double x;
     private double y;
     private double a;
 
     // Subsystem Constructor
-    public VisionSubsystem(){
+    public LimelightSubsystem(){
 
     // Get limelight from network tables
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -34,11 +36,14 @@ public class VisionSubsystem extends SubsystemBase{
     NetworkTableEntry ta = table.getEntry("ta");
 }
 
-    // Method to update main position variables
+    // Method to update main caculation variables
     private void update(){
         x = tx.getDouble(0);
         y = ty.getDouble(0);
         a = ta.getDouble(0);
+        all[0] = x;
+        all[1] = y;
+        all[2] = a;
         distance = getDistance(true);
     }
 
@@ -47,40 +52,34 @@ public class VisionSubsystem extends SubsystemBase{
         if( v == 0){
             // Set limelight pipeline view to 0
             table.getEntry("pipeline").setNumber(0);
-        }else if(v == 1){
+        } else if(v == 1){
             // Set limelight pipeline view to 1
             table.getEntry("pipeline").setNumber(1);
         }
     }
 
     // Get methods
-    public double getX(){
-        return(x);
-    }
+    public double getX(){return x;}
 
-    public double getY(){
-        return(y);
-    }
+    public double getY(){return y;}
 
-    public double getA(){
-        return(a);
-    }
+    public double getA(){return a;}
 
     // Return an array of all get method values
-    public double[] getAll(){
-        double[] array = {x,y,a};
-        return(array);
-    }
+    public double[] getAll(){return all;}
 
     // Caculate distance from camera to target
     public double getDistance(boolean direct){
         // Get value directly or caculate it
         if(direct == true){
-            return VisionConstants.deltaHeight/(Math.tan(Math.toRadians(VisionConstants.cameraAngle + y)));
+            return VisionConstants.deltaHeight/(
+            Math.tan(
+            Math.toRadians(
+            VisionConstants.cameraAngle + y
+            )));
+            
         }
-        else{ 
-            return distance;
-        }
+        else{return distance;}
     }
 
     // Update vision variables once per scheduler run

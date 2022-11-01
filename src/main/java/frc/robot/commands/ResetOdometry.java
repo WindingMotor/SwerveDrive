@@ -19,7 +19,7 @@ public class ResetOdometry extends CommandBase {
 
   // Reset robot position when command starts
   @Override
-  public void initialize() { swerveSubsystem.resetOdometry(pose);}
+  public void initialize() {swerveSubsystem.resetOdometry(pose);}
 
   // Stop command once it starts 
   @Override
