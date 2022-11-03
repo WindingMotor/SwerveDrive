@@ -1,7 +1,6 @@
 // FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
 package frc.robot.commands;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IOConstants;
 //import frc.robot.subsystems.ExampleSubsystem;
@@ -16,8 +15,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SwerveJoystick extends CommandBase {
 
-  private double speedModifier;
-  private double turnModifier;
   // Create empty variables for reassignment
   private final SwerveSubsystem swerveSubsystem;
   private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
@@ -60,14 +57,10 @@ public class SwerveJoystick extends CommandBase {
     ySpeed = Math.abs(ySpeed) > IOConstants.kDeadband ? ySpeed : 0.0;
     turningSpeed = Math.abs(turningSpeed) > IOConstants.kDeadband ? turningSpeed : 0.0;
 
-    // Set updated values of the speed modifyers
-    this.speedModifier = swerveSubsystem.getSpeedModifier(false);
-    this.turnModifier = swerveSubsystem.getTurnModifier();
-
     // Apply slew rate to joystick input to make robot input smoother
-    xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond / speedModifier;
-    ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond / speedModifier;
-    turningSpeed = turningLimiter.calculate(turningSpeed) * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond / turnModifier;
+    xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+    ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+    turningSpeed = turningLimiter.calculate(turningSpeed) * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
     // Apply field oriented mode
     ChassisSpeeds chassisSpeeds;

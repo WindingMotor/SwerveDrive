@@ -2,6 +2,8 @@
 
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMax;
@@ -25,7 +27,7 @@ public class SwerveModule extends SubsystemBase {
 
   private final PIDController turningPidController;
 
-  private final AnalogInput absoluteEncoder;
+  private final DutyCycleEncoder absoluteEncoder;
   private final boolean absoluteEncoderReversed;
   private final double absoluteEncoderOffsetRad;
 
@@ -37,7 +39,7 @@ public class SwerveModule extends SubsystemBase {
     // Create and set offsets and reverse state for encoders
     this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
     this.absoluteEncoderReversed = absoLuteEncoderReversed;
-    absoluteEncoder = new AnalogInput(absoluteEncoderId);
+    absoluteEncoder = new DutyCycleEncoder(absoluteEncoderId);
 
     // Create drive and turning motor
     driveMotor = new CANSparkMax(driveMotorId, MotorType.kBrushless);
@@ -89,10 +91,13 @@ public class SwerveModule extends SubsystemBase {
 
   // Get the swerve module absolute encoder value for other methods
   public double getAbsoluteEncoderRad(){
-    double angle = absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
-    angle *= 2.0 * Math.PI;
-    angle -= absoluteEncoderOffsetRad;
-    return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
+    /*
+    double angle = absoluteEncoder.getAbsolutePosition(); // Get the angle of encoder // RobotController.getVoltage5V();
+    angle *= 2.0 * Math.PI; // Convert encoder value to radians
+    angle -= absoluteEncoderOffsetRad; // Apply magnetic offset to encoder
+    return angle * (absoluteEncoderReversed ? -1.0 : 1.0); // Reverse encoder value if chosen to
+    */
+    return absoluteEncoder.getAbsolutePosition();
   }
 
   // Set turning encoder to match absolute encoder value
@@ -124,7 +129,7 @@ public class SwerveModule extends SubsystemBase {
     turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
 
     // Output debugging information to smart dashboard
-    SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "] state", state.toString());
+    SmartDashboard.putString("Swerve[" + absoluteEncoder + "] state", state.toString());
 
   }
 

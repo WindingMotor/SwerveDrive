@@ -64,10 +64,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // The end of this madness ^_^
 
-  // Modifyers for max speed of robot 
-  private double speedModifier = 2;
-  private double turnModifier = 2;
-
   // Create the navX using roboRIO expansion port
   private AHRS gyro = new AHRS(SPI.Port.kMXP);
 
@@ -144,10 +140,16 @@ public class SwerveSubsystem extends SubsystemBase {
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
     SmartDashboard.putNumber("Heading", getHeading());
     SmartDashboard.putString("Field Location", getPose().getTranslation().toString());
-    SmartDashboard.putNumber("Speed Modifier: ", getSpeedModifier(false));
+
+    SmartDashboard.putNumber("Front Left ABE: ", frontLeft.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Front Right ABE: ", frontRight.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Back Left ABE: ", backLeft.getAbsoluteEncoderRad());
+    SmartDashboard.putNumber("Back Right ABE: ", backRight.getAbsoluteEncoderRad());
+
+
   }
 
-  // Speed modifier methods
+  /*
   public double getSpeedModifier(boolean live){
     // Check if live input is selected
     if(live){
@@ -156,13 +158,13 @@ public class SwerveSubsystem extends SubsystemBase {
     } else{return speedModifier;}
   }
 
-  // Speed modifier methods
   public void setSpeedModifier(double s){speedModifier = s;}
 
   public double getTurnModifier(){return turnModifier;}
 
   public void setTurnModifier(double t){turnModifier = t;}
-  
+  */
+
 }
 
 
