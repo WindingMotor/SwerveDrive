@@ -91,13 +91,11 @@ public class SwerveModule extends SubsystemBase {
 
   // Get the swerve module absolute encoder value for other methods
   public double getAbsoluteEncoderRad(){
-    /*
-    double angle = absoluteEncoder.getAbsolutePosition(); // Get the angle of encoder // RobotController.getVoltage5V();
+    
+    double angle = absoluteEncoder.getAbsolutePosition(); // Get the angle of encoder
     angle *= 2.0 * Math.PI; // Convert encoder value to radians
     angle -= absoluteEncoderOffsetRad; // Apply magnetic offset to encoder
     return angle * (absoluteEncoderReversed ? -1.0 : 1.0); // Reverse encoder value if chosen to
-    */
-    return absoluteEncoder.getAbsolutePosition();
   }
 
   // Set turning encoder to match absolute encoder value
@@ -133,7 +131,7 @@ public class SwerveModule extends SubsystemBase {
 
   }
 
-  // STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP STOP, this function stops the robot.
+  // Stop all motors on module 
   public void stop() {
     driveMotor.set(0);
     turningMotor.set(0);

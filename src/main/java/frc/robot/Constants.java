@@ -68,10 +68,10 @@ public final class Constants {
         public static final boolean kBackRightDriveAbsoluteEncoderReversed = false;
 
                                         // Need to update values for our specific magnets
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0; // -0.254
-        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0; // 1.252
-        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 0; // -1.816
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad =  0; // -4.811
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 2.965; // -0.254
+        public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.73; // 1.252
+        public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 0.027; // -1.816
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad =  1.72; // -4.811
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;

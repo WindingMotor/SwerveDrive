@@ -148,23 +148,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
 
   }
-
-  /*
-  public double getSpeedModifier(boolean live){
-    // Check if live input is selected
-    if(live){
-      // Return value of knob on right joystick
-      return(rightJoystick.getRawAxis(3));
-    } else{return speedModifier;}
-  }
-
-  public void setSpeedModifier(double s){speedModifier = s;}
-
-  public double getTurnModifier(){return turnModifier;}
-
-  public void setTurnModifier(double t){turnModifier = t;}
-  */
-
 }
 
 
