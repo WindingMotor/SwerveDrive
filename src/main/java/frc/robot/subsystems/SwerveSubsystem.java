@@ -136,17 +136,18 @@ public class SwerveSubsystem extends SubsystemBase {
   // Periodic looooooop
   @Override
   public void periodic(){
+
     // Periodicly update odometer for it to caculate position
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
+
+    // Put data on smart dashboard
     SmartDashboard.putNumber("Heading", getHeading());
     SmartDashboard.putString("Field Location", getPose().getTranslation().toString());
-
     SmartDashboard.putNumber("Front Left ABE: ", frontLeft.getAbsoluteEncoderRad());
     SmartDashboard.putNumber("Front Right ABE: ", frontRight.getAbsoluteEncoderRad());
     SmartDashboard.putNumber("Back Left ABE: ", backLeft.getAbsoluteEncoderRad());
     SmartDashboard.putNumber("Back Right ABE: ", backRight.getAbsoluteEncoderRad());
-
-
+    
   }
 }
 

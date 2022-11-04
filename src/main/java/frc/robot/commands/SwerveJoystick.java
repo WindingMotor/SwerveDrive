@@ -65,7 +65,6 @@ public class SwerveJoystick extends CommandBase {
     // Apply field oriented mode
     ChassisSpeeds chassisSpeeds;
     if(fieldOrientedFunction.get()){
-      DriverStation.reportWarning("Applying field oriented mode!", true);
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
     }
     // Apply non-field oriented mode

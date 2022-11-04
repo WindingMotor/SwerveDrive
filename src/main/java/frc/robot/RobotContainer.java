@@ -47,10 +47,11 @@ public class RobotContainer {
   public RobotContainer(){
 
     // Set swerve subsystem default command to swerve joystick with respective joystick inputs
+    // Axies: 0 = left/right : 1 = forward/backwards : 2 = dial
     swerveSubsystem.setDefaultCommand(new SwerveJoystick(swerveSubsystem,
     () -> rightJoystick.getRawAxis(0 /* Place axis value here! X-AXIS */),
     () -> rightJoystick.getRawAxis(1 /* Place axis value here! Y-AXIS */),
-    () -> leftJoystick.getRawAxis(1 /* Place axis value here! R-AXIS */),
+    () -> leftJoystick.getRawAxis(0 /* Place axis value here! R-AXIS */),
     () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton /* Field oriented? */)));
 
     // Run button binding method
@@ -74,7 +75,6 @@ public class RobotContainer {
 
   // Create a command using TrajectoryRunner and passing in trajectory to run
   private Command forward2M = new TrajectoryRunner(swerveSubsystem, xController, yController, thetaController, Forward2M.getTrajectory(), Forward2M.getTrajectoryConfig());
-
 
   // Load in trajectory and create command for it
   PathPlannerTrajectory testPath = PathPlanner.loadPath("testPath", new PathConstraints(4, 3) /* velocity and acceleration */ ); 
