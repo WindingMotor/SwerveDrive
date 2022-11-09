@@ -4,14 +4,11 @@ package frc.robot;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.auto.TestAuto;
 import frc.robot.auto.trajectories.Forward2M;
@@ -41,6 +38,9 @@ public class RobotContainer {
   private final PIDController xController = new PIDController(AutoConstants.kPXController, 0, 0);
   private final PIDController yController = new PIDController(AutoConstants.kPYController, 0, 0);
   private final ProfiledPIDController thetaController = new ProfiledPIDController(AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
+
+  // Create a non profiled PID controller for paht planner
+  private final PIDController ppThetaController = new PIDController(AutoConstants.kPThetaController, 0, 0);
 
   //------------------------------------C-O-N-S-T-R-U-C-T-O-R----------------------------//
 
@@ -77,8 +77,8 @@ public class RobotContainer {
   private Command forward2M = new TrajectoryRunner(swerveSubsystem, xController, yController, thetaController, Forward2M.getTrajectory(), Forward2M.getTrajectoryConfig());
 
   // Load in trajectory and create command for it
-  PathPlannerTrajectory testPath = PathPlanner.loadPath("testPath", new PathConstraints(4, 3) /* velocity and acceleration */ ); 
-  private Command PPtest = new TrajectoryWeaver(swerveSubsystem, xController, yController, thetaController, testPath);
+  PathPlannerTrajectory testPath = PathPlanner.loadPath("pathOne", new PathConstraints(4, 3) /* velocity and acceleration */ ); 
+  private Command ppTest = new TrajectoryWeaver(swerveSubsystem, xController, yController, ppThetaController, testPath, true);
 
 
   // Returns command to run during auto
@@ -95,6 +95,9 @@ public class RobotContainer {
     }
     else if(autoSelector == "forward2M"){
       autoCommand = forward2M;
+    }
+    else if(autoSelector == "ppTest"){
+      autoCommand = ppTest;
     }
 
     return autoCommand;

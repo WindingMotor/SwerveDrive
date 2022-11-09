@@ -2,13 +2,9 @@
 
 package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -17,10 +13,12 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.commands.TrajectoryWeaver;
+
 
 
 public class SwerveSubsystem extends SubsystemBase {
@@ -147,8 +145,38 @@ public class SwerveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Front Right ABE: ", frontRight.getAbsoluteEncoderRad());
     SmartDashboard.putNumber("Back Left ABE: ", backLeft.getAbsoluteEncoderRad());
     SmartDashboard.putNumber("Back Right ABE: ", backRight.getAbsoluteEncoderRad());
-    
+
   }
+
+// Assuming this method is part of a drivetrain subsystem that provides the necessary methods
+public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
+  // This is just an example event map. It would be better to have a constant, global event map
+  // in your code that will be used by all path following commands.
+  /* HashMap<String, Command> eventMap = new HashMap<>();
+  eventMap.put("marker1", new PrintCommand("Passed marker 1"));
+  eventMap.put("intakeDown", new IntakeDown()); */
+
+  return new SequentialCommandGroup(
+      new InstantCommand(() -> {
+        // Reset odometry for the first path you run during auto
+        if(isFirstPath){
+            this.resetOdometry(traj.getInitialHolonomicPose());
+        }
+      }),
+      new PPSwerveControllerCommand(traj, this::getPose, DriveConstants.kDriveKinematics, new PIDController(0, 0, 0), new PIDController(0, 0, 0), new PIDController(0, 0, 0), this::setModuleStates, this));
+}
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
