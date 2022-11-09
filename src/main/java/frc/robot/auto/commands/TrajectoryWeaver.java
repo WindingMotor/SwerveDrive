@@ -1,6 +1,6 @@
 // FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
-package frc.robot.commands;
+package frc.robot.auto.commands;
 import java.util.HashMap;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.ReportWarning;
+import frc.robot.commands.ResetOdometry;
 import frc.robot.subsystems.SwerveSubsystem;
 
 // Runs a given pp-trajectory as a command 
@@ -18,12 +20,8 @@ public class TrajectoryWeaver extends SequentialCommandGroup{
     // Constructor that obtains required values
     public TrajectoryWeaver(SwerveSubsystem swerveSubsystem, PIDController xController,
     PIDController yController,  PIDController ppthetaController,
-    PathPlannerTrajectory pptrajectory, Boolean isFirstPath){
+    PathPlannerTrajectory pptrajectory, HashMap eventMap, Boolean isFirstPath){
       
-        // Create map of events for testing
-        HashMap<String, Command> eventMap = new HashMap<>();
-        eventMap.put("marker1", new PrintCommand("Passed marker 1"));
-
         // Tell theta PID controller that its a circle
         ppthetaController.enableContinuousInput(-Math.PI, Math.PI);
 
@@ -37,7 +35,7 @@ public class TrajectoryWeaver extends SequentialCommandGroup{
             // Commands to run sequentially
             new SequentialCommandGroup(
               // Move robot with path planner swerve command
-              new PPSwerveControllerCommand(pptrajectory, swerveSubsystem::getPose, DriveConstants.kDriveKinematics, xController, yController, ppthetaController, swerveSubsystem::setModuleStates, swerveSubsystem),
+              new PPSwerveControllerCommand(pptrajectory, swerveSubsystem::getPose, DriveConstants.kDriveKinematics, xController, yController, ppthetaController, swerveSubsystem::setModuleStates, eventMap, swerveSubsystem),
               // Tell driver station that command is running
               new ReportWarning("Trajectory weaver: " + pptrajectory.toString()),
               // Stop all module movement

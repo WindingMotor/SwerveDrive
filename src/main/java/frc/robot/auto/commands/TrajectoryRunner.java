@@ -1,6 +1,6 @@
 // FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
-package frc.robot.commands;
+package frc.robot.auto.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.ReportWarning;
+import frc.robot.commands.ResetOdometry;
 import frc.robot.subsystems.SwerveSubsystem;
 
 // Runs a given trajectory as a command 

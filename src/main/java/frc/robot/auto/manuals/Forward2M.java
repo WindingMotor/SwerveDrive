@@ -1,6 +1,6 @@
 
 
-package frc.robot.auto.trajectories;
+package frc.robot.auto.manuals;
 import java.util.List;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -18,7 +18,8 @@ public class Forward2M {
 
 //--------------------------------T-R-A-J-E-C-T-O-R-Y---S-T-A-R-T------------------------------//
 
-    private static Trajectory trajectory = TrajectoryGenerator.generateTrajectory( /* Starting point*/ new Pose2d(0,0,new Rotation2d(0)), List.of(
+    private static Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+     /* Starting point*/ new Pose2d(0,0,new Rotation2d(0)), List.of(
     // Interior points
     //new Translation2d(1,0),
     new Translation2d(0,1.5)), 

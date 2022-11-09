@@ -1,6 +1,7 @@
 // FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
 package frc.robot;
+import java.util.HashMap;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -10,15 +11,24 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.IOConstants;
-import frc.robot.auto.TestAuto;
-import frc.robot.auto.trajectories.Forward2M;
+import frc.robot.auto.commands.TrajectoryRunner;
+import frc.robot.auto.commands.TrajectoryWeaver;
+import frc.robot.auto.manuals.Forward2M;
+import frc.robot.auto.routines.TestRoutine;
 import frc.robot.commands.SwerveJoystick;
-import frc.robot.commands.TrajectoryRunner;
-import frc.robot.commands.TrajectoryWeaver;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import java.util.HashMap;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.subsystems.SwerveSubsystem;
 
 public class RobotContainer {
 
@@ -70,34 +80,28 @@ public class RobotContainer {
 
   //------------------------------------A-U-T-O-N-O-M-O-U-S------------------------------------//
   
-  // Create testAuto command without using TrajectoryRunner ;(
-  private Command testAuto = new TestAuto(swerveSubsystem, xController, yController, thetaController);
 
-  // Create a command using TrajectoryRunner and passing in trajectory to run
+  // Create a command using TrajectoryRunner and pass in the trajectory to run
   private Command forward2M = new TrajectoryRunner(swerveSubsystem, xController, yController, thetaController, Forward2M.getTrajectory(), Forward2M.getTrajectoryConfig());
-
-  // Load in trajectory and create command for it
-  PathPlannerTrajectory testPath = PathPlanner.loadPath("pathOne", new PathConstraints(4, 3) /* velocity and acceleration */ ); 
-  private Command ppTest = new TrajectoryWeaver(swerveSubsystem, xController, yController, ppThetaController, testPath, true);
+    
+  // Load in test routine command for auto selector
+  private Command testRoutine = new TestRoutine(swerveSubsystem, xController, yController, ppThetaController);
 
 
   // Returns command to run during auto
   public Command getAutonomousCommand(){
 
-    String autoSelector = "testAuto";
+    String autoSelector = "forward2M";
     Command autoCommand = null;
 
   //------------------------------------S-E-L-E-C-T-O-R------------------------------------//
 
     // Selector if-statement
-    if(autoSelector == "testAuto"){
-      autoCommand = testAuto;
-    }
-    else if(autoSelector == "forward2M"){
+    if(autoSelector == "forward2M"){
       autoCommand = forward2M;
     }
-    else if(autoSelector == "ppTest"){
-      autoCommand = ppTest;
+    else if(autoSelector == "testRoutine"){
+      autoCommand = testRoutine;
     }
 
     return autoCommand;
