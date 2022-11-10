@@ -9,7 +9,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class LimelightSubsystem extends SubsystemBase{
     
-    // Create private instance variables 
+    // Create private instance variables  
     NetworkTable table;
     private NetworkTableEntry tx;
     private NetworkTableEntry ty;
