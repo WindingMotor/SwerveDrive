@@ -7,7 +7,6 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.ReportWarning;
@@ -20,7 +19,7 @@ public class TrajectoryWeaver extends SequentialCommandGroup{
     // Constructor that obtains required values
     public TrajectoryWeaver(SwerveSubsystem swerveSubsystem, PIDController xController,
     PIDController yController,  PIDController ppthetaController,
-    PathPlannerTrajectory pptrajectory, HashMap eventMap, Boolean isFirstPath){
+    PathPlannerTrajectory pptrajectory, HashMap<String, Command> eventMap, Boolean isFirstPath){
       
         // Tell theta PID controller that its a circle
         ppthetaController.enableContinuousInput(-Math.PI, Math.PI);

@@ -7,6 +7,9 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+// Ignore unused variable warnings
+@SuppressWarnings("unused")
+
 public class LimelightSubsystem extends SubsystemBase{
     
     // Create private instance variables  
