@@ -17,9 +17,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.DriveConstants;
-
-
+import frc.robot.util.Monitor;
+import frc.robot.util.Constants.DriveConstants;
 
 public class SwerveSubsystem extends SubsystemBase {
 
@@ -64,6 +63,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
   // Create the navX using roboRIO expansion port
   private AHRS gyro = new AHRS(SPI.Port.kMXP);
+
+  // Create a robot monitor
+  private final Monitor monitor = new Monitor();
 
 
   // Create odometer for error correction
@@ -138,44 +140,26 @@ public class SwerveSubsystem extends SubsystemBase {
     // Periodicly update odometer for it to caculate position
     odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(), backRight.getState());
 
-    // Put data on smart dashboard
-    SmartDashboard.putNumber("Heading", getHeading());
+    // Odometry
+    SmartDashboard.putNumber("eading", getHeading());
     SmartDashboard.putString("Field Location", getPose().getTranslation().toString());
+
+    // Absolute encoder
     SmartDashboard.putNumber("Front Left ABE: ", frontLeft.getAbsoluteEncoderRad());
     SmartDashboard.putNumber("Front Right ABE: ", frontRight.getAbsoluteEncoderRad());
     SmartDashboard.putNumber("Back Left ABE: ", backLeft.getAbsoluteEncoderRad());
     SmartDashboard.putNumber("Back Right ABE: ", backRight.getAbsoluteEncoderRad());
 
+    // Module state
+    SmartDashboard.putString("Front Left State: ", frontLeft.getState().toString());
+    SmartDashboard.putString("Front Right State: ", frontRight.getState().toString());
+    SmartDashboard.putString("Back Left State: ", backLeft.getState().toString());
+    SmartDashboard.putString("Back Right State: ", backRight.getState().toString());
+
+    // Update robot monitor
+    monitor.update();
+    
   }
-
-// Assuming this method is part of a drivetrain subsystem that provides the necessary methods
-public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
-  // This is just an example event map. It would be better to have a constant, global event map
-  // in your code that will be used by all path following commands.
-  /* HashMap<String, Command> eventMap = new HashMap<>();
-  eventMap.put("marker1", new PrintCommand("Passed marker 1"));
-  eventMap.put("intakeDown", new IntakeDown()); */
-
-  return new SequentialCommandGroup(
-      new InstantCommand(() -> {
-        // Reset odometry for the first path you run during auto
-        if(isFirstPath){
-            this.resetOdometry(traj.getInitialHolonomicPose());
-        }
-      }),
-      new PPSwerveControllerCommand(traj, this::getPose, DriveConstants.kDriveKinematics, new PIDController(0, 0, 0), new PIDController(0, 0, 0), new PIDController(0, 0, 0), this::setModuleStates, this));
-}
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

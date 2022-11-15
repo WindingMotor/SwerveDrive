@@ -1,10 +1,9 @@
 // FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
 package frc.robot.commands;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.IOConstants;
-//import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.util.Constants.DriveConstants;
+import frc.robot.util.Constants.IOConstants;
 import java.util.function.Supplier;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;

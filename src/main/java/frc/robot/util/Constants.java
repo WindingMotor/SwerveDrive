@@ -1,6 +1,6 @@
 // FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
-package frc.robot;
+package frc.robot.util;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -110,6 +110,7 @@ public final class Constants {
 
         public static final int kFieldOrientedButton = 3;
         public static final int kZeroHeadingButton = 2;
+        public static final int kRotatorButton = 3;
            
     }
 

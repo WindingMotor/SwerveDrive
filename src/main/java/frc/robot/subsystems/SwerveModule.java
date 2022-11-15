@@ -2,7 +2,6 @@
 
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -10,8 +9,8 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.ModuleConstants;
+import frc.robot.util.Constants.DriveConstants;
+import frc.robot.util.Constants.ModuleConstants;
 
 public class SwerveModule extends SubsystemBase {
  
@@ -95,10 +94,10 @@ public class SwerveModule extends SubsystemBase {
     return angle * (absoluteEncoderReversed ? -1.0 : 1.0); // Reverse encoder value if chosen to
   }
 
-  // Set turning encoder to match absolute encoder value
+  // Set turning encoder to match absolute encoder value with gear offsets applied
   public void resetEncoders(){
     driveEncoder.setPosition(0);
-    turningEncoder.setPosition(getAbsoluteEncoderRad());
+    turningEncoder.setPosition(getAbsoluteEncoderRad() * ModuleConstants.kTurningMotorGearRatio);
   }
 
   // Get swerve module current state, aka velocity and wheel rotation
@@ -122,9 +121,6 @@ public class SwerveModule extends SubsystemBase {
 
     // Use PID to calculate angle setpoint
     turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
-
-    // Output debugging information to smart dashboard
-    SmartDashboard.putString("Swerve[" + absoluteEncoder + "] state", state.toString());
 
   }
 
