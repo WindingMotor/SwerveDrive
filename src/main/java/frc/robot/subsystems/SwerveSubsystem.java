@@ -2,9 +2,6 @@
 
 package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -132,6 +129,15 @@ public class SwerveSubsystem extends SubsystemBase {
   public void resetOdometry(Pose2d pose){
     odometer.resetPosition(pose, getRotation2d());
   }
+
+  // Reset all swerve module encoders
+  public void resetAllEncoders(){
+      frontLeft.resetEncoders();
+      frontRight.resetEncoders();
+      backLeft.resetEncoders();
+      backRight.resetEncoders();
+  }
+  
 
   // Periodic looooooop
   @Override

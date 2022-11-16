@@ -68,9 +68,15 @@ public class RobotContainer {
     new JoystickButton(rightJoystick,Constants.IOConstants.kZeroHeadingButton).whenPressed(() -> swerveSubsystem.zeroHeading());
 
     // Rotate robot 90* using swerve rotator
-    new JoystickButton(leftJoystick, Constants.IOConstants.kRotatorButton).whenPressed(new SwerveRotator(swerveSubsystem, () -> 0.1, swerveSubsystem.getHeading()));
+    //new JoystickButton(leftJoystick, Constants.IOConstants.kRotatorButton).whenPressed(new SwerveRotator(swerveSubsystem, () -> 0.1, swerveSubsystem.getHeading()));
 
   }
+
+    //------------------------------------R-E-F-E-R-R-E-R-S------------------------------------//
+
+    public void containerResetAllEncoders() {
+      swerveSubsystem.resetAllEncoders();
+    }
 
   //------------------------------------A-U-T-O-N-O-M-O-U-S------------------------------------//
   
