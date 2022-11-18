@@ -21,17 +21,17 @@ public class Monitor {
 
         // Check voltage
         if(sysVoltage <= 9){
-            DriverStation.reportError("BATTERY -SUPER- CRITICAL: " + sysVoltage, true);
+            DriverStation.reportError("VERY LOW VOLTAGE: " + sysVoltage, true);
         }
         else if(sysVoltage <= 10){
-            DriverStation.reportError("BATTERY CRITICAL: " + sysVoltage , true);
+            DriverStation.reportError("LOW VOLTAGE: " + sysVoltage , true);
         }
-        else if(sysVoltage <= 11){
-            DriverStation.reportWarning("BATTERY LOW: " + sysVoltage, true);
+        else if(sysVoltage <= 12){
+            DriverStation.reportWarning("MINIMUM VOLTAGE: " + sysVoltage, true);
         }
 
         // Check current draw
-        if(sysCurrent >= 110){
+        if(sysCurrent >= 115){
             DriverStation.reportError("MAX CURRENT DRAW: " + sysCurrent, true);
         }
         else if(sysCurrent >= 60){

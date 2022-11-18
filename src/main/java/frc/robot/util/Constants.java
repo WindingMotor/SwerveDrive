@@ -67,7 +67,7 @@ public final class Constants {
         public static final boolean kFrontRightDriveAbsoluteEncoderReversed = false;
         public static final boolean kBackRightDriveAbsoluteEncoderReversed = false;
 
-                                        // Need to update values for our specific magnets
+                                        // Need to update values for our specific magnet fields
         public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 2.965; 
         public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 3.73;
         public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = 0.027;
