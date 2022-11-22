@@ -30,14 +30,16 @@ public class SwerveModule extends SubsystemBase {
   private final boolean absoluteEncoderReversed;
   private final double absoluteEncoderOffsetRad;
 
+  private String moduleName;
 
   // Class constructor where we assign default values for variables
-   public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed,
-            int absoluteEncoderId, double absoluteEncoderOffset, boolean absoLuteEncoderReversed, String name) {
+   public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed, int absoluteEncoderId, double absoluteEncoderOffset, boolean absoLuteEncoderReversed, String name) {
 
     // Set offsets for absolute encoder in RADIANS!!!!!
     this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
     this.absoluteEncoderReversed = absoLuteEncoderReversed;
+
+    moduleName = name;
 
     // Create absolute encoder
     absoluteEncoder = new DutyCycleEncoder(absoluteEncoderId);
@@ -62,7 +64,7 @@ public class SwerveModule extends SubsystemBase {
     driveEncoder.setVelocityConversionFactor(ModuleConstants.kDriveEncoderRPM2MeterPerSec);
 
     // Change drive turning conversion factors
-    turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
+    turningEncoder.setPositionConversionFactor( 1 / 12.8 /*.kTurningEncoderRot2Rad*/);
     turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
     // Create PID controller
@@ -70,21 +72,25 @@ public class SwerveModule extends SubsystemBase {
 
     // Tell PID controller that it is a *wheel*
     turningPidController.enableContinuousInput(-Math.PI, Math.PI);
+    //absoluteEncoder.setDutyCycleRange(1/4096, 4095/4096);
 
     // Call resetEncoders
     resetEncoders();
 
-    // Smart dashboard
-    SmartDashboard.putNumber(name + " ABE Absolute Position", absoluteEncoder.getAbsolutePosition());
-    SmartDashboard.putNumber(name + " ABE Radians Raw", absoluteEncoder.getAbsolutePosition() * 2.0 * Math.PI);
-    SmartDashboard.putNumber(name + " ABE Radians", getAbsoluteEncoderRad());
+  }
 
-    SmartDashboard.putNumber(name + " Drive Position", getDrivePosition());
-    SmartDashboard.putNumber(name + " Turning Position", getTurningPosition());
+  public void update(){
 
-    SmartDashboard.putNumber(name + " Drive Velocity", getDriveVelocity());
-    SmartDashboard.putNumber(name + " Turning Velocity", getTurningVelocity());
+    SmartDashboard.putNumber(moduleName + " ABE Absolute Position", absoluteEncoder.getAbsolutePosition());
+    SmartDashboard.putNumber(moduleName + " ABE Radians Raw", absoluteEncoder.getAbsolutePosition() * 2.0 * Math.PI);
 
+    SmartDashboard.putNumber(moduleName + " ABE Radians", getAbsoluteEncoderRad());
+
+    SmartDashboard.putNumber(moduleName + " Drive Position", getDrivePosition());
+    SmartDashboard.putNumber(moduleName + " Turning Position", getTurningPosition());
+
+    SmartDashboard.putNumber(moduleName + " Drive Velocity", getDriveVelocity());
+    SmartDashboard.putNumber(moduleName + " Turning Velocity", getTurningVelocity());
 
   }
 
@@ -108,16 +114,22 @@ public class SwerveModule extends SubsystemBase {
   /* Convert absolute value of the encoder to radians and then subtract the radian offset
   then check if the encoder is reversed.*/
   public double getAbsoluteEncoderRad(){
-    return((
-      (absoluteEncoder.getAbsolutePosition() * 2.0 * Math.PI) - // Convert to radians
-      absoluteEncoderOffsetRad) * // Apply offsets
-      (absoluteEncoderReversed ? -1.0 : 1.0)); // Check if negative
+    double angle = 0;
+    angle = absoluteEncoder.getAbsolutePosition();
+    angle *= 2.0 * Math.PI;
+    angle -= absoluteEncoderOffsetRad;
+
+    if(angle < 0){
+      angle = 2.0 * Math.PI + angle ;
+    }
+
+    return angle * ( absoluteEncoderReversed ? -1.0 : 1.0);
   }
 
   // Set turning encoder to match absolute encoder value with gear offsets applied
   public void resetEncoders(){
     driveEncoder.setPosition(0);
-    turningEncoder.setPosition(getAbsoluteEncoderRad());
+    turningEncoder.setPosition(absoluteEncoder.getAbsolutePosition());
   }
 
   // Get swerve module current state, aka velocity and wheel rotation

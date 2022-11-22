@@ -157,6 +157,11 @@ public class SwerveSubsystem extends SubsystemBase {
     // Update robot monitor
     //monitor.update();
     
+    frontLeft.update();
+    frontRight.update();
+    backLeft.update();
+    backRight.update();
+    
   }
 
 }
