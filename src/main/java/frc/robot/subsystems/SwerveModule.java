@@ -64,7 +64,7 @@ public class SwerveModule extends SubsystemBase {
     driveEncoder.setVelocityConversionFactor(ModuleConstants.kDriveEncoderRPM2MeterPerSec);
 
     // Change drive turning conversion factors
-    turningEncoder.setPositionConversionFactor( 1 / 12.8 /*.kTurningEncoderRot2Rad*/);
+    turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
     turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
     // Create PID controller
@@ -114,16 +114,29 @@ public class SwerveModule extends SubsystemBase {
   /* Convert absolute value of the encoder to radians and then subtract the radian offset
   then check if the encoder is reversed.*/
   public double getAbsoluteEncoderRad(){
+
+    //  Make angle variable
     double angle = 0;
+
+    // Get encoder absolute position goes from 1 to 0
     angle = absoluteEncoder.getAbsolutePosition();
+
+    // Convert into radians
     angle *= 2.0 * Math.PI;
+
+    // Apply magnetic offsets in radians
     angle -= absoluteEncoderOffsetRad;
 
+    // Mulitply by -1 if angle is less than 0
     if(angle < 0){
       angle = 2.0 * Math.PI + angle ;
     }
 
+    angle = Math.abs(angle);
+
+    // Make negative if needed
     return angle * ( absoluteEncoderReversed ? -1.0 : 1.0);
+    
   }
 
   // Set turning encoder to match absolute encoder value with gear offsets applied
