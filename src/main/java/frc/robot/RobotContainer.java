@@ -3,6 +3,7 @@
 package frc.robot;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.auto.commands.TrajectoryRunner;
@@ -76,6 +77,7 @@ public class RobotContainer {
     //------------------------------------R-E-F-E-R-R-E-R-S------------------------------------//
 
     public void containerResetAllEncoders() {
+      DriverStation.reportWarning("Running containerResetAllEncoders() in RobotContainer", true);
       swerveSubsystem.resetAllEncoders();
     }
 

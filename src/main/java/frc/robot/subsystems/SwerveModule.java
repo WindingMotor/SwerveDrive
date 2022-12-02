@@ -1,10 +1,11 @@
 // FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
 package frc.robot.subsystems;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
@@ -63,7 +64,7 @@ public class SwerveModule extends SubsystemBase {
     driveEncoder.setPositionConversionFactor(ModuleConstants.kDriveEncoderRot2Meter);
     driveEncoder.setVelocityConversionFactor(ModuleConstants.kDriveEncoderRPM2MeterPerSec);
 
-    // Change drive turning conversion factors
+    // Change conversion factors for neo turning encoder - should be in radians!
     turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
     turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
@@ -72,6 +73,8 @@ public class SwerveModule extends SubsystemBase {
 
     // Tell PID controller that it is a *wheel*
     turningPidController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // Set duty cycle for ABE encoder - lasted checked not working correctly!
     //absoluteEncoder.setDutyCycleRange(1/4096, 4095/4096);
 
 
@@ -82,16 +85,15 @@ public class SwerveModule extends SubsystemBase {
 
   public void update(){
 
-    SmartDashboard.putNumber(moduleName + " ABE Absolute Position", absoluteEncoder.getAbsolutePosition());
-    SmartDashboard.putNumber(moduleName + " ABE Radians Raw", absoluteEncoder.getAbsolutePosition() * 2.0 * Math.PI);
+    SmartDashboard.putNumber(moduleName + "Absolute-Position", absoluteEncoder.getAbsolutePosition());
+    SmartDashboard.putNumber(moduleName + "Radians-Raw" , absoluteEncoder.getAbsolutePosition() * 2.0 * Math.PI);
+    SmartDashboard.putNumber(moduleName + "Radians", getAbsoluteEncoderRad());
 
-    SmartDashboard.putNumber(moduleName + " ABE Radians", getAbsoluteEncoderRad());
+    //SmartDashboard.putNumber(moduleName + " Drive Position", getDrivePosition());
+    //SmartDashboard.putNumber(moduleName + " Turning Position", getTurningPosition());
 
-    SmartDashboard.putNumber(moduleName + " Drive Position", getDrivePosition());
-    SmartDashboard.putNumber(moduleName + " Turning Position", getTurningPosition());
-
-    SmartDashboard.putNumber(moduleName + " Drive Velocity", getDriveVelocity());
-    SmartDashboard.putNumber(moduleName + " Turning Velocity", getTurningVelocity());
+    //SmartDashboard.putNumber(moduleName + " Drive Velocity", getDriveVelocity());
+    //SmartDashboard.putNumber(moduleName + " Turning Velocity", getTurningVelocity());
 
   }
 
@@ -117,7 +119,7 @@ public class SwerveModule extends SubsystemBase {
   public double getAbsoluteEncoderRad(){
 
     //  Make angle variable
-    double angle = 0;
+    double angle;
 
     // Get encoder absolute position goes from 1 to 0
     angle = absoluteEncoder.getAbsolutePosition();
@@ -128,22 +130,35 @@ public class SwerveModule extends SubsystemBase {
     // Apply magnetic offsets in radians
     angle -= absoluteEncoderOffsetRad;
 
-    // Mulitply by -1 if angle is less than 0
+    /*
     if(angle < 0){
       angle = 2.0 * Math.PI + angle ;
-    }
+    } 
+    */
 
     angle = Math.abs(angle);
 
-    // Make negative if needed
-    return angle * ( absoluteEncoderReversed ? -1.0 : 1.0);
+    // Make negative if set
+    angle *= ( absoluteEncoderReversed ? -1.0 : 1.0);
+    
+    // Report setting to driver station
+    DriverStation.reportError(moduleName + " called getAbsoluteEncoderRad: " + angle + "  " + absoluteEncoderOffsetRad, true);
+
+    // Return angle in radians for neo turning motor encoder
+    return angle;
     
   }
 
   // Set turning encoder to match absolute encoder value with gear offsets applied
   public void resetEncoders(){
     driveEncoder.setPosition(0);
-    turningEncoder.setPosition(absoluteEncoder.getAbsolutePosition());
+    REVLibError error = turningEncoder.setPosition(getAbsoluteEncoderRad());
+    if(error.value != 0){
+      DriverStation.reportError(moduleName + " reset encoders error!: " + error.value, true);
+    }
+    else if(error.value == 0){
+      DriverStation.reportWarning(moduleName + " reset encoders has been ran without errors: " + getAbsoluteEncoderRad(), true);
+    }
   }
 
   // Get swerve module current state, aka velocity and wheel rotation
