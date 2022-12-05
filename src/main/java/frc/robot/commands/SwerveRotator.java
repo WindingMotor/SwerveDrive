@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SwerveRotator extends CommandBase {
 
+/*
+
   // Create empty variables for reassignment
   private final SwerveSubsystem swerveSubsystem;
   private final Supplier<Double> turningSpdFunction;
@@ -56,8 +58,6 @@ public class SwerveRotator extends CommandBase {
     if(currentHeading >= 89 & currentHeading <= 91){
       isDone = true;
     }
-
-
   }
 
   // Stop all module motor movement when command ends
@@ -67,4 +67,5 @@ public class SwerveRotator extends CommandBase {
   @Override
   public boolean isFinished(){return isDone;}
 
+*/
 }
