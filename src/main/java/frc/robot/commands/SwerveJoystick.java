@@ -79,7 +79,7 @@ public class SwerveJoystick extends CommandBase {
     // Set each module state
     swerveSubsystem.setModuleStates(moduleStates);
   }
-
+  
   // Stop all module motor movement when command ends
   @Override
   public void end(boolean interrupted){swerveSubsystem.stopModules();}
