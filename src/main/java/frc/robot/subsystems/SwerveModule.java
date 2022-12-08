@@ -85,9 +85,10 @@ public class SwerveModule extends SubsystemBase {
 
   public void update(){
 
-    SmartDashboard.putNumber(moduleName + "Absolute-Position", absoluteEncoder.getAbsolutePosition());
-    SmartDashboard.putNumber(moduleName + "Radians-Raw" , absoluteEncoder.getAbsolutePosition() * 2.0 * Math.PI);
-    SmartDashboard.putNumber(moduleName + "Radians", getAbsoluteEncoderRad());
+    // BUG WITH THESE 3 LINES, BREAKS SWERVE MODULE CODE
+    //SmartDashboard.putNumber(moduleName + "Absolute-Position", absoluteEncoder.getAbsolutePosition());
+    //SmartDashboard.putNumber(moduleName + "Radians-Raw" , absoluteEncoder.getAbsolutePosition() * 2.0 * Math.PI);
+    //SmartDashboard.putNumber(moduleName + "Radians", getAbsoluteEncoderRad());
 
     //SmartDashboard.putNumber(moduleName + " Drive Position", getDrivePosition());
     //SmartDashboard.putNumber(moduleName + " Turning Position", getTurningPosition());
