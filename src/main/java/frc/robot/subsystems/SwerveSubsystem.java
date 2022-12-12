@@ -66,11 +66,11 @@ public class SwerveSubsystem extends SubsystemBase {
   private AHRS gyro = new AHRS(SPI.Port.kMXP);
 
   // Create a robot monitor
-  private final Monitor monitor = new Monitor();
+  //private final Monitor monitor = new Monitor();
 
 
   // Create odometer for error correction
-  private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
+  private SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
 
   // Create empty right joystick for live speed control
   Joystick rightJoystick;
@@ -118,6 +118,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     // Make sure robot rotation is all ways possible by changing other module roation speeds
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
+    
     frontLeft.setDesiredState(desiredStates[0]);
     frontRight.setDesiredState(desiredStates[1]);
     backLeft.setDesiredState(desiredStates[2]);

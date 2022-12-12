@@ -31,10 +31,10 @@ public final class Constants {
 
         // Need to update to correct values, I dont remember the value we set last meet
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-                new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-                new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-                new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-                new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+                new Translation2d(kWheelBase / 2, kTrackWidth / 2), //fl
+                new Translation2d(kWheelBase / 2, -kTrackWidth / 2), //fr
+                new Translation2d(-kWheelBase / 2, kTrackWidth / 2), //bl
+                new Translation2d(-kWheelBase / 2, -kTrackWidth / 2)); //br
 
                                                                // Driving Motor Ports
         public static final int kFrontLeftDriveMotorPort = 1;  // Front Left 
