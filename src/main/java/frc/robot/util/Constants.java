@@ -122,6 +122,7 @@ public final class Constants {
         public static final int kFieldOrientedButton = 3;
         public static final int kZeroHeadingButton = 2;
         public static final int kRotatorButton = 3;
+        public static final double kTransmitterOffset = 1.429;
            
     }
 
