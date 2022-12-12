@@ -1,6 +1,7 @@
 // FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
 package frc.robot;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -13,6 +14,7 @@ import frc.robot.commands.SwerveJoystick;
 import frc.robot.commands.SwerveRotator;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.util.Constants;
+import frc.robot.util.Transmitter;
 import frc.robot.util.Constants.AutoConstants;
 import frc.robot.util.Constants.IOConstants;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,7 +26,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
 
-  // GIT TEST LAPTOP
   //------------------------------------O-B-J-E-C-T-S-----------------------------------//
 
   // Create joysticks
@@ -50,7 +51,9 @@ public class RobotContainer {
   public RobotContainer(){
 
     // Set swerve subsystem default command to swerve joystick with respective joystick inputs
-    // Axies: 0 = left/right : 1 = forward/backwards : 2 = dial
+    // Joystick Numbers 0 = LEFT : 1 = RIGHT
+    // Joystick Axises: 0 = left/right : 1 = forward/backwards : 2 = dial
+    // Transmitter Axises: 0 = roll : 1 = pitch : 2 = throttle : 3 = yaw : 4 = analog1 : 5 = analog2
     swerveSubsystem.setDefaultCommand(new SwerveJoystick(swerveSubsystem,
     () -> rightJoystick.getRawAxis(0 /* Place axis value here! X-AXIS */),
     () -> rightJoystick.getRawAxis(1 /* Place axis value here! Y-AXIS */),

@@ -1,0 +1,78 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/SwerveModule": "Subsystem",
+      "/LiveWindow/SwerveSubsystem": "Subsystem",
+      "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[1]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[2]": "Digital Input",
+      "/LiveWindow/Ungrouped/DigitalInput[3]": "Digital Input",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[5]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[6]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[7]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[8]": "PIDController",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
+      "/SmartDashboard/Back Left  real Turn": "Mechanism2d",
+      "/SmartDashboard/Back Left commanded Turn": "Mechanism2d",
+      "/SmartDashboard/Back Right  real Turn": "Mechanism2d",
+      "/SmartDashboard/Back Right commanded Turn": "Mechanism2d",
+      "/SmartDashboard/Front Left  real Turn": "Mechanism2d",
+      "/SmartDashboard/Front Left commanded Turn": "Mechanism2d",
+      "/SmartDashboard/Front Right  real Turn": "Mechanism2d",
+      "/SmartDashboard/Front Right commanded Turn": "Mechanism2d"
+    },
+    "windows": {
+      "/SmartDashboard/Back Left  real Turn": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Back Left commanded Turn": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Back Right  real Turn": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Back Right commanded Turn": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Front Left  real Turn": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Front Left commanded Turn": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Front Right  real Turn": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Front Right commanded Turn": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "SmartDashboard": {
+      "open": true
+    }
+  }
+}

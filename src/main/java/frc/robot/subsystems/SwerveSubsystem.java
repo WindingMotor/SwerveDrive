@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.Monitor;
+import frc.robot.util.Transmitter;
 import frc.robot.util.Constants.DriveConstants;
 
 public class SwerveSubsystem extends SubsystemBase {
@@ -72,8 +73,11 @@ public class SwerveSubsystem extends SubsystemBase {
   // Create odometer for error correction
   private SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, new Rotation2d(0));
 
-  // Create empty right joystick for live speed control
+  // Create empty right joystick for live speed control: BORKED!
   Joystick rightJoystick;
+
+  private final Transmitter transmitter = new Transmitter(4);
+
 
   // Swerve subsystem constructor
   public SwerveSubsystem(Joystick rightJoystick) {
@@ -155,6 +159,8 @@ public class SwerveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Heading", getHeading());
     SmartDashboard.putString("Field Location", getPose().getTranslation().toString());
 
+   // SmartDashboard.putNumber("Transmitter Roll ", transmitter.getRoll());
+    SmartDashboard.putNumber("Transmitter Pitch ", transmitter.getPitch());
     // Update robot monitor
     //monitor.update();
     
