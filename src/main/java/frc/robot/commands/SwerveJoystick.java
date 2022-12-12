@@ -45,6 +45,11 @@ public class SwerveJoystick extends CommandBase {
   @Override
   public void execute(){
 
+    SmartDashboard.putNumber("X-Axis Joystick",xSpdFunction.get());
+    SmartDashboard.putNumber("Y-Axis Joystick",ySpdFunction.get());
+    SmartDashboard.putNumber("R-Axis Joystick",turningSpdFunction.get());
+
+
     // Set joystick inputs to speed variables
     double xSpeed = xSpdFunction.get();
     double ySpeed = ySpdFunction.get();
