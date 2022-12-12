@@ -50,7 +50,9 @@ public class RobotContainer {
   public RobotContainer(){
 
     // Set swerve subsystem default command to swerve joystick with respective joystick inputs
-    // Axies: 0 = left/right : 1 = forward/backwards : 2 = dial
+    // Joystick Numbers 0 = LEFT : 1 = RIGHT
+    // Joystick Axises: 0 = left/right : 1 = forward/backwards : 2 = dial
+    // Transmitter Axises: 0 = roll : 1 = pitch : 2 = throttle : 3 = yaw : 4 = analog1 : 5 = analog2
     swerveSubsystem.setDefaultCommand(new SwerveJoystick(swerveSubsystem,
     () -> rightJoystick.getRawAxis(0 /* Place axis value here! X-AXIS */),
     () -> rightJoystick.getRawAxis(1 /* Place axis value here! Y-AXIS */),
