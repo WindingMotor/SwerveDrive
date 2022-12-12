@@ -33,7 +33,7 @@ public class SwerveModule extends SubsystemBase {
 
   private String moduleName;
 
-  // Class constructor where we assign default values for variables
+  // Class constructor where we assign default values for variable
    public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed, int absoluteEncoderId, double absoluteEncoderOffset, boolean absoLuteEncoderReversed, String name) {
 
     // Set offsets for absolute encoder in RADIANS!!!!!
