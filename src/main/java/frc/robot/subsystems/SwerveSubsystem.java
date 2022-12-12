@@ -76,9 +76,6 @@ public class SwerveSubsystem extends SubsystemBase {
   // Create empty right joystick for live speed control: BORKED!
   Joystick rightJoystick;
 
-  private final Transmitter transmitter = new Transmitter(4);
-
-
   // Swerve subsystem constructor
   public SwerveSubsystem(Joystick rightJoystick) {
 
@@ -158,9 +155,7 @@ public class SwerveSubsystem extends SubsystemBase {
     // Odometry
     SmartDashboard.putNumber("Heading", getHeading());
     SmartDashboard.putString("Field Location", getPose().getTranslation().toString());
-
-   // SmartDashboard.putNumber("Transmitter Roll ", transmitter.getRoll());
-    SmartDashboard.putNumber("Transmitter Pitch ", transmitter.getPitch());
+    
     // Update robot monitor
     //monitor.update();
     

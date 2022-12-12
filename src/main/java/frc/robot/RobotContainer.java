@@ -46,6 +46,9 @@ public class RobotContainer {
   // Create a non profiled PID controller for path planner
   private final PIDController ppThetaController = new PIDController(AutoConstants.kPThetaController, 0, 0);
 
+  // Create transmitter object
+  private final Transmitter transmitter = new Transmitter(4);
+
   //------------------------------------C-O-N-S-T-R-U-C-T-O-R----------------------------//
 
   public RobotContainer(){
@@ -54,11 +57,21 @@ public class RobotContainer {
     // Joystick Numbers 0 = LEFT : 1 = RIGHT
     // Joystick Axises: 0 = left/right : 1 = forward/backwards : 2 = dial
     // Transmitter Axises: 0 = roll : 1 = pitch : 2 = throttle : 3 = yaw : 4 = analog1 : 5 = analog2
+
+    //>-------------N-O-R-M-A-L----------------<//
+    /*
     swerveSubsystem.setDefaultCommand(new SwerveJoystick(swerveSubsystem,
-    () -> rightJoystick.getRawAxis(0 /* Place axis value here! X-AXIS */),
-    () -> rightJoystick.getRawAxis(1 /* Place axis value here! Y-AXIS */),
-    () -> leftJoystick.getRawAxis(0 /* Place axis value here! R-AXIS */),
-    () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton /* Field oriented? */)));
+    () -> rightJoystick.getRawAxis(0), // X-Axis
+    () -> rightJoystick.getRawAxis(1), // Y-Axis
+    () -> leftJoystick.getRawAxis(0), // R-Axis
+    () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton))); // Feild Oriented
+    */
+    //>---------T-R-A-N-S-M-I-T-T-E-R----------<// // MIGHT NOT BE WORKING YET!
+    swerveSubsystem.setDefaultCommand(new SwerveJoystick(swerveSubsystem,
+    () -> transmitter.getRoll(), // X-Axis
+    () -> transmitter.getPitch(), // Y-Axis
+    () -> transmitter.getYaw(), // R-Axis
+    () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton))); // Field Oriented
 
     // Run button binding method
     configureButtonBindings();

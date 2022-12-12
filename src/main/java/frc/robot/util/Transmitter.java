@@ -20,25 +20,33 @@ public class Transmitter {
     }
 
     public double calculateOffset(double d){
+
+        // Convert double to smaller decimal value by type conversion
         double x =  Double.parseDouble(df.format(d));
+
+        // Return value with applied offsets depending on if negative or postitive or zero
         if(x > 0.000){return(x* Constants.IOConstants.kTransmitterOffset);}
         if(x <  0.000){return(x* -Constants.IOConstants.kTransmitterOffset);}
         else{return(0.000);}
     }
 
     public double getRoll(){
+        SmartDashboard.putNumber("Roll", calculateOffset(joystick.getRawAxis(0)));
         return(calculateOffset(joystick.getRawAxis(0)));
     }
 
     public double getPitch(){
+        SmartDashboard.putNumber("Pitch", calculateOffset(joystick.getRawAxis(1)));
         return(calculateOffset(joystick.getRawAxis(1)));
     }
 
     public double getThrottle(){
+        SmartDashboard.putNumber("Throttle", calculateOffset(joystick.getRawAxis(2)));
         return(calculateOffset(joystick.getRawAxis(2)));
     }
 
     public double getYaw(){
+        SmartDashboard.putNumber("Yaw", calculateOffset(joystick.getRawAxis(3)));
         return(calculateOffset(joystick.getRawAxis(3)));
     }
 }
