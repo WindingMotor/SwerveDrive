@@ -64,7 +64,7 @@ public class SwerveModule extends SubsystemBase {
     // Create absolute encoder
     absoluteEncoder = new DutyCycleEncoder(absoluteEncoderId);
 
-    // Set duty cycle range of encoder
+    // Set duty cycle range of encoder of ABE encoder
     absoluteEncoder.setDutyCycleRange(1.0/4096.0, 4095.0/4096.0);
 
     // Create drive and turning motor
@@ -92,10 +92,6 @@ public class SwerveModule extends SubsystemBase {
 
     // Tell PID controller that it is a *wheel*
     turningPidController.enableContinuousInput(-Math.PI, Math.PI);
-
-    // Set duty cycle for ABE encoder - lasted checked not working correctly!
-    //absoluteEncoder.setDutyCycleRange(1/4096, 4095/4096);
-
 
     // Test out the built in Spark Max PID controller using simulation
     simTurnController = turningMotor.getPIDController();
@@ -237,6 +233,12 @@ public class SwerveModule extends SubsystemBase {
 
     // Use PID to calculate angle setpoint
     turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
+
+    simTurn.setAngle(state.angle);
+    simDirection.setAngle(state.speedMetersPerSecond>0? 0:180);
+
+    simTurn2.setAngle(absoluteEncoder.getAbsolutePosition());
+    simDirection2.setAngle(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond >0 ? 0:180);
 
   }
 
