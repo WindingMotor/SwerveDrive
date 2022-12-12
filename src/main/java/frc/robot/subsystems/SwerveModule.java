@@ -3,17 +3,27 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.util.Color8Bit;
+import java.sql.Driver;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVLibError;
+import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.Constants.DriveConstants;
 import frc.robot.util.Constants.ModuleConstants;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 
 public class SwerveModule extends SubsystemBase {
  
@@ -32,6 +42,15 @@ public class SwerveModule extends SubsystemBase {
   private final double absoluteEncoderOffsetRad;
 
   private String moduleName;
+
+  // Special UI variables for swerve simulation
+  private MechanismLigament2d simTurn;
+  private MechanismLigament2d simDirection;
+
+  private MechanismLigament2d simTurn2;
+  private MechanismLigament2d simDirection2;
+
+  private SparkMaxPIDController simTurnController;
 
   // Class constructor where we assign default values for variable
    public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed, int absoluteEncoderId, double absoluteEncoderOffset, boolean absoLuteEncoderReversed, String name) {
@@ -68,7 +87,7 @@ public class SwerveModule extends SubsystemBase {
     turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
     turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
-    // Create PID controller
+    // Create PID controller on ROBO RIO
     turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
 
     // Tell PID controller that it is a *wheel*
@@ -78,8 +97,43 @@ public class SwerveModule extends SubsystemBase {
     //absoluteEncoder.setDutyCycleRange(1/4096, 4095/4096);
 
 
+    // Test out the built in Spark Max PID controller using simulation
+    simTurnController = turningMotor.getPIDController();
+
+    // Set PID values for the simulated Spark max PID
+    simTurnController.setP(ModuleConstants.kPTurning);
+    simTurnController.setI(ModuleConstants.kITurning);
+    simTurnController.setD(ModuleConstants.kDTurning);
+    simTurnController.setIZone(0.0);
+    simTurnController.setFF(0.0);
+    simTurnController.setOutputRange(-1, 1);
+
     // Call resetEncoders
     resetEncoders();
+
+    // Thanks to Alec for this code! 
+    //>-----------S-I-M------------<//
+
+    // Create the mechanism 2d canvas and get the root
+    Mechanism2d mod = new Mechanism2d(6,6);
+    MechanismRoot2d root = mod.getRoot("climber", 3, 3);
+
+    // Add simTurn to the root, add direction to turn, then add it to smart dashboard
+    simTurn = root.append(new MechanismLigament2d("Swerve Turn", 2, 1.75));
+    simDirection = simTurn.append(new MechanismLigament2d("Wheel direction", 1, 0, 6, new Color8Bit(Color.kPurple)));
+    SmartDashboard.putData(moduleName+" commanded Turn", mod);
+
+    //------------//
+
+    // Do the same thing but for the real module state
+    Mechanism2d mod2 = new Mechanism2d(6,6);
+    MechanismRoot2d root2 = mod2.getRoot("climber2", 3, 3);
+
+    simTurn2 = root2.append(new MechanismLigament2d("Swerve Turn", 2, 1.75));
+    simDirection2 = simTurn2.append(new MechanismLigament2d("Wheel direction", 1, 0, 6, new Color8Bit(Color.kPurple)));
+    SmartDashboard.putData(moduleName+"  real Turn", mod);
+
+    //>-------------------------------<//
 
   }
 

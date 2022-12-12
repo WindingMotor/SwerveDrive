@@ -17,7 +17,14 @@ public final class Constants {
         public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
         public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
         public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
+
+        // Used in working code currently
         public static final double kPTurning = 0.5;
+
+        // These two used for simulation currently 
+        public static final double kITurning = 0.0;
+        public static final double kDTurning = 0.005;
+        
     }
 
     // Swerve drive
