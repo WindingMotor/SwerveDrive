@@ -234,10 +234,10 @@ public class SwerveModule extends SubsystemBase {
     // Use PID to calculate angle setpoint
     turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
 
-    simTurn.setAngle(state.angle);
+    simTurn.setAngle(state.angle.plus(Rotation2d.fromDegrees(90)));
     simDirection.setAngle(state.speedMetersPerSecond>0? 0:180);
 
-    simTurn2.setAngle(absoluteEncoder.getAbsolutePosition());
+    simTurn2.setAngle(absoluteEncoder.getAbsolutePosition() + 90.0);
     simDirection2.setAngle(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond >0 ? 0:180);
 
   }
