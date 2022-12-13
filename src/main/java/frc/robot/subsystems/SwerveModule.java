@@ -56,8 +56,8 @@ public class SwerveModule extends SubsystemBase {
    public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed, int absoluteEncoderId, double absoluteEncoderOffset, boolean absoLuteEncoderReversed, String name) {
 
     // Set offsets for absolute encoder in RADIANS!!!!!
-    this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
-    this.absoluteEncoderReversed = absoLuteEncoderReversed;
+    absoluteEncoderOffsetRad = absoluteEncoderOffset;
+    absoluteEncoderReversed = absoLuteEncoderReversed;
 
     moduleName = name;
 
@@ -136,12 +136,12 @@ public class SwerveModule extends SubsystemBase {
   public void update(){
 
     // BUG WITH THESE 3 LINES, BREAKS SWERVE MODULE CODE
-    //SmartDashboard.putNumber(moduleName + "Absolute-Position", absoluteEncoder.getAbsolutePosition());
+    SmartDashboard.putNumber(moduleName + "Absolute-Position", absoluteEncoder.getAbsolutePosition());
     //SmartDashboard.putNumber(moduleName + "Radians-Raw" , absoluteEncoder.getAbsolutePosition() * 2.0 * Math.PI);
     //SmartDashboard.putNumber(moduleName + "Radians", getAbsoluteEncoderRad());
 
     //SmartDashboard.putNumber(moduleName + " Drive Position", getDrivePosition());
-    //SmartDashboard.putNumber(moduleName + " Turning Position", getTurningPosition());
+    SmartDashboard.putNumber(moduleName + " Turning Position", getTurningPosition());
 
     //SmartDashboard.putNumber(moduleName + " Drive Velocity", getDriveVelocity());
     //SmartDashboard.putNumber(moduleName + " Turning Velocity", getTurningVelocity());
@@ -204,6 +204,7 @@ public class SwerveModule extends SubsystemBase {
   public void resetEncoders(){
     driveEncoder.setPosition(0);
     REVLibError error = turningEncoder.setPosition(getAbsoluteEncoderRad());
+    DriverStation.reportError("RESET ENCODER" + getAbsoluteEncoderRad() + " ", true);
     if(error.value != 0){
       DriverStation.reportError(moduleName + " reset encoders error!: " + error.value, true);
     }
@@ -226,19 +227,21 @@ public class SwerveModule extends SubsystemBase {
     }
 
     // Optimize swerve module state to do fastest rotation movement, aka never rotate more than 90*
-    state = SwerveModuleState.optimize(state, getState().angle);
+   state = SwerveModuleState.optimize(state, getState().angle);
 
     // Scale velocity down using robot max speed
     driveMotor.set(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
 
     // Use PID to calculate angle setpoint
     turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
+    
 
     simTurn.setAngle(state.angle); // .plus(Rotation2d.fromDegrees(90))
     simDirection.setAngle(state.speedMetersPerSecond>0? 0:180);
 
     simTurn2.setAngle(absoluteEncoder.getAbsolutePosition()); // +90
     simDirection2.setAngle(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond >0 ? 0:180);
+    SmartDashboard.putString("Swerve["+moduleName+"] state", state.toString());
 
   }
 
