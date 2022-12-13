@@ -76,7 +76,7 @@ public class Robot extends TimedRobot {
     }
 
     // Reset all ABE encoders
-    //m_robotContainer.containerResetAllEncoders();
+    m_robotContainer.containerResetAllEncoders();
 
   }
 
