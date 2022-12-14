@@ -62,6 +62,8 @@ public class SwerveJoystick extends CommandBase {
 
     // Apply field oriented mode
     ChassisSpeeds chassisSpeeds;
+    
+    /* 
     if(fieldOrientedFunction.get()){
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
     }
@@ -69,6 +71,9 @@ public class SwerveJoystick extends CommandBase {
     else{
       chassisSpeeds = new ChassisSpeeds(xSpeed,ySpeed,turningSpeed);
     }
+    */
+
+    chassisSpeeds = new ChassisSpeeds(xSpeed,ySpeed,turningSpeed);
 
     // Put field oriented value on smart dashboard
     SmartDashboard.putBoolean("Field Oriented: ", fieldOrientedFunction.get());

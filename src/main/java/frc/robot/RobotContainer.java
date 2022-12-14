@@ -59,19 +59,21 @@ public class RobotContainer {
     // Transmitter Axises: 0 = roll : 1 = pitch : 2 = throttle : 3 = yaw : 4 = analog1 : 5 = analog2
 
     //>-------------N-O-R-M-A-L----------------<//
-    /*
+    
     swerveSubsystem.setDefaultCommand(new SwerveJoystick(swerveSubsystem,
     () -> rightJoystick.getRawAxis(0), // X-Axis
     () -> rightJoystick.getRawAxis(1), // Y-Axis
     () -> leftJoystick.getRawAxis(0), // R-Axis
     () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton))); // Feild Oriented
-    */
+    
     //>---------T-R-A-N-S-M-I-T-T-E-R----------<// // MIGHT NOT BE WORKING YET!
+    /* 
     swerveSubsystem.setDefaultCommand(new SwerveJoystick(swerveSubsystem,
     () -> transmitter.getRoll(), // X-Axis
     () -> transmitter.getPitch(), // Y-Axis
     () -> transmitter.getYaw(), // R-Axis
     () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton))); // Field Oriented
+      */
 
     // Run button binding method
     configureButtonBindings();
@@ -94,7 +96,7 @@ public class RobotContainer {
 
     public void containerResetAllEncoders() {
       DriverStation.reportWarning("Running containerResetAllEncoders() in RobotContainer", true);
-      swerveSubsystem.resetAllEncoders();
+      //swerveSubsystem.resetAllEncoders();
     }
 
   //------------------------------------A-U-T-O-N-O-M-O-U-S------------------------------------//
