@@ -11,18 +11,20 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class SwerveJoystick extends CommandBase {
+// The same thing as swerve joystick but with throttle control
+
+public class SwerveThrottledJoystick extends CommandBase {
 
   // Create empty variables for reassignment
   private final SwerveSubsystem swerveSubsystem;
-  private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction;
+  private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction, throttleFunction;
   private final Supplier<Boolean> fieldOrientedFunction;
   private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
 
   // Command constructor and requirements 
-  public SwerveJoystick(SwerveSubsystem swerveSubsystem,
-  Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction,
-  Supplier<Boolean> fieldOrientedFunction) {
+  public SwerveThrottledJoystick(SwerveSubsystem swerveSubsystem,
+  Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction,  
+  Supplier<Double> throttleFunction, Supplier<Boolean> fieldOrientedFunction) {
 
     // Assign empty variables values passed from constructor and requirements
     this.swerveSubsystem = swerveSubsystem;
@@ -30,6 +32,7 @@ public class SwerveJoystick extends CommandBase {
     this.ySpdFunction = ySpdFunction;
     this.turningSpdFunction = turningSpdFunction;
     this.fieldOrientedFunction = fieldOrientedFunction;
+    this.throttleFunction = throttleFunction;
 
     // Slew rate limiter
     this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
@@ -45,20 +48,21 @@ public class SwerveJoystick extends CommandBase {
   @Override
   public void execute(){
 
-    // Set joystick inputs to speed variables
-    double xSpeed = xSpdFunction.get();
-    double ySpeed = ySpdFunction.get();
-    double turningSpeed = turningSpdFunction.get();
+    // Set joystick inputs to speed variables but multiply throttle value
+    double throttleSpeed = throttleFunction.get();
+    double xSpeed = xSpdFunction.get() * throttleSpeed * 1;
+    double ySpeed = ySpdFunction.get() * throttleSpeed * 1;
+    double turningSpeed = turningSpdFunction.get() * throttleSpeed * 1;
 
     // Apply deadband to protect motors
-    xSpeed = Math.abs(xSpeed) > IOConstants.kDeadband ? xSpeed : 0.0;
-    ySpeed = Math.abs(ySpeed) > IOConstants.kDeadband ? ySpeed : 0.0;
-    turningSpeed = Math.abs(turningSpeed) > IOConstants.kDeadband ? turningSpeed : 0.0;
+    //xSpeed = Math.abs(xSpeed) > IOConstants.kDeadband ? xSpeed : 0.0;
+    //ySpeed = Math.abs(ySpeed) > IOConstants.kDeadband ? ySpeed : 0.0;
+    //turningSpeed = Math.abs(turningSpeed) > IOConstants.kDeadband ? turningSpeed : 0.0;
 
     // Apply slew rate to joystick input to make robot input smoother
-    xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-    ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-    turningSpeed = turningLimiter.calculate(turningSpeed) * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+    //xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+    //ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+    //turningSpeed = turningLimiter.calculate(turningSpeed) * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
     // Apply field oriented mode
     ChassisSpeeds chassisSpeeds;
