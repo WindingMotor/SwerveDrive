@@ -91,7 +91,8 @@ public class SwerveModule extends SubsystemBase {
     turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
 
     // Tell PID controller that it is a *wheel*
-    turningPidController.enableContinuousInput(-Math.PI, Math.PI);
+    //turningPidController.enableContinuousInput(-Math.PI, Math.PI);
+    turningPidController.enableContinuousInput(0,2*Math.PI);
 
     // Test out the built in Spark Max PID controller using simulation
     simTurnController = turningMotor.getPIDController();
@@ -187,7 +188,7 @@ public class SwerveModule extends SubsystemBase {
     } 
     */
 
-    angle = Math.abs(angle);
+    //angle = Math.abs(angle);
 
     // Make negative if set
     angle *= ( absoluteEncoderReversed ? -1.0 : 1.0);

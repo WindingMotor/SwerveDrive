@@ -12,7 +12,7 @@ public final class Constants {
     public static final class ModuleConstants {
         public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
         public static final double kDriveMotorGearRatio = 1 / 8.14; // old value 1 / 5.8462
-        public static final double kTurningMotorGearRatio = 1 / 12.8; // old value 1 / 18.0
+        public static final double kTurningMotorGearRatio = 1/12.8; // old value 1 / 18.0
         public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
         public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
         public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
@@ -38,10 +38,10 @@ public final class Constants {
 
         // Need to update to correct values, I dont remember the value we set last meet
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-                new Translation2d(kWheelBase / 2, kTrackWidth / 2), //fl
+                new Translation2d(-kWheelBase / 2, -kTrackWidth / 2), //br
                 new Translation2d(kWheelBase / 2, -kTrackWidth / 2), //fr
                 new Translation2d(-kWheelBase / 2, kTrackWidth / 2), //bl
-                new Translation2d(-kWheelBase / 2, -kTrackWidth / 2)); //br
+                new Translation2d(kWheelBase / 2, kTrackWidth / 2)); //fl
 
                                                                // Driving Motor Ports
         public static final int kFrontLeftDriveMotorPort = 1;  // Front Left 
@@ -79,18 +79,18 @@ public final class Constants {
         public static final boolean kBackRightDriveAbsoluteEncoderReversed = false;
 
                                         // Need to update values for our specific magnet fields
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0.98 * 2 * Math.PI; 
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0.98 * 2 * Math.PI + Math.PI/2; 
         public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = (.25+0.0918)  * 2 * Math.PI;
         public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = (0.0141+.25) * 2 * Math.PI;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad =  0.2577  * 2 * Math.PI;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad =  0.2577 * 2 * Math.PI + Math.PI/2;
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
         public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 5;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 5;
+        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 10;
+        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 10;
     }
 
     // Autonomous
