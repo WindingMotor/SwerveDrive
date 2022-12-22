@@ -39,10 +39,10 @@ public final class Constants {
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
 
         // Default value
-            new Translation2d(kWheelBase / 2, kTrackWidth / 2), //fl
+            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2), //fl
             new Translation2d(kWheelBase / 2, -kTrackWidth / 2), //fr
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2), //bl
-            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2)); //br
+            new Translation2d(kWheelBase / 2, kTrackWidth / 2)); //br
 
         /* new Translation2d(kWheelBase / 2, kTrackWidth / 2), //fl
         new Translation2d(kWheelBase / 2, -kTrackWidth / 2), //fr
