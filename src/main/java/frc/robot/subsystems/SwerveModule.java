@@ -35,6 +35,7 @@ public class SwerveModule extends SubsystemBase {
   private final RelativeEncoder turningEncoder;
 
   private final PIDController turningPidController;
+  private SparkMaxPIDController builtinTurningPidController;
 
   private final DutyCycleEncoder absoluteEncoder;
 
@@ -50,7 +51,6 @@ public class SwerveModule extends SubsystemBase {
   private MechanismLigament2d simTurn2;
   private MechanismLigament2d simDirection2;
 
-  private SparkMaxPIDController simTurnController;
 
   // Class constructor where we assign default values for variable
    public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed, int absoluteEncoderId, double absoluteEncoderOffset, boolean absoLuteEncoderReversed, String name) {
@@ -87,23 +87,31 @@ public class SwerveModule extends SubsystemBase {
     turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderRot2Rad);
     turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderRPM2RadPerSec);
 
+    //-----ROBO-RIO-PID-----//
+
     // Create PID controller on ROBO RIO
     turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
 
     // Tell PID controller that it is a *wheel*
+<<<<<<< HEAD
     //turningPidController.enableContinuousInput(-Math.PI, Math.PI);
     turningPidController.enableContinuousInput(0,2*Math.PI);
+=======
+    turningPidController.enableContinuousInput(0, 2*Math.PI);
+>>>>>>> 878d7ab43987a17d717575061f21f0d46836356d
 
-    // Test out the built in Spark Max PID controller using simulation
-    simTurnController = turningMotor.getPIDController();
+    //-----SPARK-MAX-PID-----//
+
+    builtinTurningPidController = turningMotor.getPIDController();
 
     // Set PID values for the simulated Spark max PID
-    simTurnController.setP(ModuleConstants.kPTurning);
-    simTurnController.setI(ModuleConstants.kITurning);
-    simTurnController.setD(ModuleConstants.kDTurning);
-    simTurnController.setIZone(0.0);
-    simTurnController.setFF(0.0);
-    simTurnController.setOutputRange(-1, 1);
+    builtinTurningPidController.setP(ModuleConstants.kPTurning);
+    builtinTurningPidController.setI(ModuleConstants.kITurning);
+    builtinTurningPidController.setD(ModuleConstants.kDTurning);
+    builtinTurningPidController.setIZone(0.0);
+    builtinTurningPidController.setFF(0.0);
+    builtinTurningPidController.setOutputRange(-1, 1);
+    turningMotor.burnFlash();
 
     // Call resetEncoders
     resetEncoders();
@@ -234,7 +242,8 @@ public class SwerveModule extends SubsystemBase {
     driveMotor.set(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
 
     // Use PID to calculate angle setpoint
-    turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
+    //turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
+    turningMotor.set(builtinTurningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
     
 
     simTurn.setAngle(state.angle); // .plus(Rotation2d.fromDegrees(90))
