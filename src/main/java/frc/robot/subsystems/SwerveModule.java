@@ -93,12 +93,9 @@ public class SwerveModule extends SubsystemBase {
     turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
 
     // Tell PID controller that it is a *wheel*
-<<<<<<< HEAD
+
     //turningPidController.enableContinuousInput(-Math.PI, Math.PI);
     turningPidController.enableContinuousInput(0,2*Math.PI);
-=======
-    turningPidController.enableContinuousInput(0, 2*Math.PI);
->>>>>>> 878d7ab43987a17d717575061f21f0d46836356d
 
     //-----SPARK-MAX-PID-----//
 
@@ -242,8 +239,8 @@ public class SwerveModule extends SubsystemBase {
     driveMotor.set(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
 
     // Use PID to calculate angle setpoint
-    //turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
-    turningMotor.set(builtinTurningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
+    turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
+    //turningMotor.set(builtinTurningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
     
 
     simTurn.setAngle(state.angle); // .plus(Rotation2d.fromDegrees(90))

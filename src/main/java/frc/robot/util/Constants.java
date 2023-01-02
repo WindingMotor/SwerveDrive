@@ -31,36 +31,23 @@ public final class Constants {
     public static final class DriveConstants {
 
         // Distance between right and left wheels
-        public static final double kTrackWidth = Units.inchesToMeters(21); // 15.5
+        public static final double kTrackWidth = Units.inchesToMeters(21);
 
         // Distance between front and back wheels
         public static final double kWheelBase = Units.inchesToMeters(21.5);
 
+        // Need to update to correct values, I dont remember the value we set last meet
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-<<<<<<< HEAD
                 new Translation2d(-kWheelBase / 2, -kTrackWidth / 2), //br
                 new Translation2d(kWheelBase / 2, -kTrackWidth / 2), //fr
                 new Translation2d(-kWheelBase / 2, kTrackWidth / 2), //bl
                 new Translation2d(kWheelBase / 2, kTrackWidth / 2)); //fl
-=======
->>>>>>> 878d7ab43987a17d717575061f21f0d46836356d
 
-        // Default value
-            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2), //fl
-            new Translation2d(kWheelBase / 2, -kTrackWidth / 2), //fr
-            new Translation2d(-kWheelBase / 2, kTrackWidth / 2), //bl
-            new Translation2d(kWheelBase / 2, kTrackWidth / 2)); //br
-
-        /* new Translation2d(kWheelBase / 2, kTrackWidth / 2), //fl
-        new Translation2d(kWheelBase / 2, -kTrackWidth / 2), //fr
-        new Translation2d(-kWheelBase / 2, kTrackWidth / 2), //bl
-        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2)); //br
-        */
-                                                      // Driving Motor Ports
-        public static final int kFrontLeftDriveMotorPort =  1;  // Front Left 
+                                                               // Driving Motor Ports
+        public static final int kFrontLeftDriveMotorPort = 1;  // Front Left 
         public static final int kFrontRightDriveMotorPort = 3; // Front Right
-        public static final int kBackRightDriveMotorPort =  5;  // Back Right
-        public static final int kBackLeftDriveMotorPort =   7;   // Back Left
+        public static final int kBackRightDriveMotorPort = 5;  // Back Right
+        public static final int kBackLeftDriveMotorPort = 7;   // Back Left
 
                                                                 // Turning Motor Ports
         public static final int kFrontLeftTurningMotorPort = 2; // Front Left
@@ -77,8 +64,8 @@ public final class Constants {
         // Encoder for NEO drive
         public static final boolean kFrontLeftDriveEncoderReversed = true;
         public static final boolean kBackLeftDriveEncoderReversed = true;
-        public static final boolean kFrontRightDriveEncoderReversed = false;
-        public static final boolean kBackRightDriveEncoderReversed = false;
+        public static final boolean kFrontRightDriveEncoderReversed = true; //
+        public static final boolean kBackRightDriveEncoderReversed = true;  //
 
         public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
         public static final int kBackLeftDriveAbsoluteEncoderPort = 3;
@@ -92,25 +79,19 @@ public final class Constants {
         public static final boolean kBackRightDriveAbsoluteEncoderReversed = false;
 
                                         // Need to update values for our specific magnet fields
-        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0.98 * 2 * Math.PI + Math.PI/2; 
+        public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0.98 * 2 * Math.PI + Math.PI / 2; 
         public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = (.25+0.0918)  * 2 * Math.PI;
         public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = (0.0141+.25) * 2 * Math.PI;
-        public static final double kBackRightDriveAbsoluteEncoderOffsetRad =  0.2577 * 2 * Math.PI + Math.PI/2;
+        public static final double kBackRightDriveAbsoluteEncoderOffsetRad =  0.2577 * 2 * Math.PI + Math.PI / 2;
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
-<<<<<<< HEAD
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
         public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond;
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 10;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 10;
-=======
-        public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
-        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 4 ;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
->>>>>>> 878d7ab43987a17d717575061f21f0d46836356d
+
     }
 
     // Autonomous
@@ -128,6 +109,7 @@ public final class Constants {
         new TrapezoidProfile.Constraints(
             kMaxAngularSpeedRadiansPerSecond,
             kMaxAngularAccelerationRadiansPerSecondSquared);
+    
     }
 
     // Input and Output 
@@ -153,4 +135,5 @@ public final class Constants {
         public static final int deltaHeight = 0; 
         public static final int cameraAngle = 45;
     }
+
 }
