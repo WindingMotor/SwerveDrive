@@ -13,9 +13,7 @@ public class Monitor {
     PowerDistribution PDP = new PowerDistribution();
 
     // Class constructor
-    public Monitor(){
-
-    }
+    public Monitor(){}
 
     public void updateGeneral(){
 
@@ -24,22 +22,14 @@ public class Monitor {
         double sysTemperature = PDP.getTemperature();
 
         // Check voltage
-        if(sysVoltage <= 9){
-            DriverStation.reportError("CRIT VOLT: " + sysVoltage, true);
-        }
-        else if(sysVoltage <= 10){
-            DriverStation.reportError("LOW VOLT: " + sysVoltage , true);
-        }
+        if(sysVoltage <= 9){DriverStation.reportError("CRIT VOLT: " + sysVoltage, true);}
+        else if(sysVoltage <= 10){DriverStation.reportError("LOW VOLT: " + sysVoltage , true);}
 
         // Check current draw
-        if(sysCurrent >= 115){
-            DriverStation.reportError("ALERT! CURR DRAW: " + sysCurrent, true);
-        }
-
+        if(sysCurrent >= 115){DriverStation.reportError("ALERT! CURR DRAW: " + sysCurrent, true);}
+        
         // Check temperature
-        if(sysTemperature >= 100){
-            DriverStation.reportWarning("ALERT! PDP TEMP: " + sysTemperature, true);
-        }
+        if(sysTemperature >= 100){DriverStation.reportWarning("ALERT! PDP TEMP: " + sysTemperature, true);}
 
         // Report data to smart dashboard
         SmartDashboard.putNumber("Voltage", sysVoltage);
