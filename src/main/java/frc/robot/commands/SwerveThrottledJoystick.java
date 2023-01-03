@@ -3,7 +3,6 @@
 package frc.robot.commands;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.util.Constants.DriveConstants;
-import frc.robot.util.Constants.IOConstants;
 import java.util.function.Supplier;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -50,9 +49,9 @@ public class SwerveThrottledJoystick extends CommandBase {
 
     // Set joystick inputs to speed variables but multiply throttle value
     double throttleSpeed = throttleFunction.get();
-    double xSpeed = xSpdFunction.get() * throttleSpeed * 1;
-    double ySpeed = ySpdFunction.get() * throttleSpeed * 1;
-    double turningSpeed = turningSpdFunction.get() * throttleSpeed * 1;
+    double xSpeed = xSpdFunction.get() * throttleSpeed;
+    double ySpeed = ySpdFunction.get() * throttleSpeed;
+    double turningSpeed = turningSpdFunction.get() * throttleSpeed;
 
     // Apply deadband to protect motors
     //xSpeed = Math.abs(xSpeed) > IOConstants.kDeadband ? xSpeed : 0.0;
@@ -66,6 +65,8 @@ public class SwerveThrottledJoystick extends CommandBase {
 
     // Apply field oriented mode
     ChassisSpeeds chassisSpeeds;
+
+    /*
     if(fieldOrientedFunction.get()){
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
     }
@@ -73,6 +74,9 @@ public class SwerveThrottledJoystick extends CommandBase {
     else{
       chassisSpeeds = new ChassisSpeeds(xSpeed,ySpeed,turningSpeed);
     }
+    */
+
+    chassisSpeeds = new ChassisSpeeds(xSpeed,ySpeed,turningSpeed);
 
     // Put field oriented value on smart dashboard
     SmartDashboard.putBoolean("Field Oriented: ", fieldOrientedFunction.get());

@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SwerveRotator extends CommandBase {
 
+// A VERY DEAD AND WIP CLASS
+
 /*
 
   // Create empty variables for reassignment

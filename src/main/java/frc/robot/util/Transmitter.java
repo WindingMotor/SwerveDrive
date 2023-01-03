@@ -2,7 +2,6 @@
 
 package frc.robot.util;
 import java.text.DecimalFormat;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,9 +24,10 @@ public class Transmitter {
         double x =  Double.parseDouble(df.format(d));
 
         // Return value with applied offsets depending on if negative or postitive or zero
-        if(x > 0.000){return(x* Constants.IOConstants.kTransmitterOffset);}
-        if(x <  0.000){return(x* Constants.IOConstants.kTransmitterOffset);}
+        if(x > 0.000){return(x * Constants.IOConstants.kTransmitterOffset);}
+        if(x <  0.000){return(x * Constants.IOConstants.kTransmitterOffset);}
         else{return(0.000);}
+
     }
 
     public double getRoll(){

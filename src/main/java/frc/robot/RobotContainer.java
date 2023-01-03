@@ -1,7 +1,6 @@
 // FRC2106 Junkyard Dogs - Swerve Drive Base Code
 
 package frc.robot;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -64,16 +63,25 @@ public class RobotContainer {
     () -> rightJoystick.getRawAxis(0), // X-Axis
     () -> rightJoystick.getRawAxis(1), // Y-Axis
     () -> leftJoystick.getRawAxis(0), // R-Axis
-    () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton))); // Feild Oriented
+    () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton))); // Field Oriented
     
-    //>---------T-R-A-N-S-M-I-T-T-E-R----------<// // MIGHT NOT BE WORKING YET!
+    //>--------------T-R-A-N-S-----------------// // Might be working...
     /* 
     swerveSubsystem.setDefaultCommand(new SwerveJoystick(swerveSubsystem,
     () -> transmitter.getRoll(), // X-Axis
     () -> transmitter.getPitch(), // Y-Axis
     () -> transmitter.getYaw(), // R-Axis
     () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton))); // Field Oriented
-      */
+    */
+
+    //>-------T-R-A-N-S---T-H-R-T-L----------<// // Might maybe be working?!
+    /* 
+    swerveSubsystem.setDefaultCommand(new SwerveJoystick(swerveSubsystem,
+    () -> transmitter.getRoll(), // X-Axis
+    () -> transmitter.getPitch(), // Y-Axis
+    () -> transmitter.getYaw(), // R-Axis
+    () -> !leftJoystick.getRawButton(Constants.IOConstants.kFieldOrientedButton))); // Field Oriented
+    */
 
     // Run button binding method
     configureButtonBindings();
@@ -89,29 +97,31 @@ public class RobotContainer {
 
     // Rotate robot 90* using swerve rotator
     //new JoystickButton(leftJoystick, Constants.IOConstants.kRotatorButton).whenPressed(new SwerveRotator(swerveSubsystem, () -> 0.1, swerveSubsystem.getHeading()));
-
+    
   }
 
     //------------------------------------R-E-F-E-R-R-E-R-S------------------------------------//
 
-    public void containerResetAllEncoders() {
+    public void containerResetAllEncoders(){
       DriverStation.reportWarning("Running containerResetAllEncoders() in RobotContainer", true);
       //swerveSubsystem.resetAllEncoders();
     }
 
   //------------------------------------A-U-T-O-N-O-M-O-U-S------------------------------------//
   
-  // Create a command using TrajectoryRunner and pass in the trajectory to run
+  // Create a command using TrajectoryRunner which takes in a manual path and gets its values
   private Command forward2M = new TrajectoryRunner(swerveSubsystem, xController, yController, thetaController, Forward2M.getTrajectory(), Forward2M.getTrajectoryConfig());
     
-  // Load in test routine command for auto selector
+  // Create a command using a routine which uses TrajectoryWeaver internally
   private Command testRoutine = new TestRoutine(swerveSubsystem, xController, yController, ppThetaController);
 
-  // Returns command to run during auto
+  // Return the command to run during auto
   public Command getAutonomousCommand(){
 
-    String autoSelector = "forward2M";
-    Command autoCommand = null;
+  // Name of command to run for selector
+  String autoSelector = "forward2M";
+  // Command to run
+  Command autoCommand = null;
 
   //------------------------------------S-E-L-E-C-T-O-R------------------------------------//
 

@@ -4,21 +4,17 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
-import java.sql.Driver;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVLibError;
-import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.Constants.DriveConstants;
 import frc.robot.util.Constants.ModuleConstants;
@@ -93,9 +89,7 @@ public class SwerveModule extends SubsystemBase {
     turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
 
     // Tell PID controller that it is a *wheel*
-
-    //turningPidController.enableContinuousInput(-Math.PI, Math.PI);
-    turningPidController.enableContinuousInput(0,2*Math.PI);
+    turningPidController.enableContinuousInput(0, 2*Math.PI);
 
     //-----SPARK-MAX-PID-----//
 
@@ -193,7 +187,7 @@ public class SwerveModule extends SubsystemBase {
     } 
     */
 
-    //angle = Math.abs(angle);
+    angle = Math.abs(angle);
 
     // Make negative if set
     angle *= ( absoluteEncoderReversed ? -1.0 : 1.0);
@@ -239,7 +233,7 @@ public class SwerveModule extends SubsystemBase {
     driveMotor.set(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
 
     // Use PID to calculate angle setpoint
-    turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
+    //turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
     //turningMotor.set(builtinTurningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
     
 

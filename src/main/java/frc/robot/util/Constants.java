@@ -134,6 +134,7 @@ public final class Constants {
         // The difference in height between the target's height and the height of the camera.
         public static final int deltaHeight = 0; 
         public static final int cameraAngle = 45;
+
     }
 
 }
