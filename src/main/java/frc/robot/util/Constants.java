@@ -92,6 +92,9 @@ public final class Constants {
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 10;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 10;
 
+        public static final double kMaxDriveMotorTemp = 33.0;
+
+
     }
 
     // Autonomous

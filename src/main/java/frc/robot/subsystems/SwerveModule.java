@@ -252,4 +252,21 @@ public class SwerveModule extends SubsystemBase {
     turningMotor.set(0);
   }
 
+
+  // Motor and SparkMax methods for Monitor 
+  public double[] getMotorsCurrent(){
+    return(new double[]{driveMotor.getOutputCurrent(),turningMotor.getOutputCurrent()});
+  }
+
+  public double[] getMotorsTemp(){
+    return(new double[]{driveMotor.getMotorTemperature(),turningMotor.getMotorTemperature()});
+  }
+
+  public void setSmartCurrentLimiter(int driveLimit, int turningLimit){
+    driveMotor.setSmartCurrentLimit(driveLimit);
+    turningMotor.setSmartCurrentLimit(driveLimit);
+  }
+
+
+
 }

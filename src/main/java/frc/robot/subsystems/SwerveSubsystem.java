@@ -2,6 +2,8 @@
 
 package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -142,8 +144,13 @@ public class SwerveSubsystem extends SubsystemBase {
       backLeft.resetEncoders();
       backRight.resetEncoders();
   }
-  
 
+  // Get each module reference for Monitor
+  public SwerveModule getFrontLeft(){return(frontLeft);}
+  public SwerveModule getFrontRight(){return(frontRight);}
+  public SwerveModule getBackLeft(){return(backLeft);}
+  public SwerveModule getBackRight(){return(backRight);}
+  
   // Periodic looooooop
   @Override
   public void periodic(){
